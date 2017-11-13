@@ -8,5 +8,14 @@
     <artifactId>digital_planet</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
 
+        <!-- Spring data mongodb -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>1.8.2.RELEASE</version>
+        </dependency>
+
+    </dependencies>
 </project>
