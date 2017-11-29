@@ -1,5 +1,7 @@
 package com.digitalplanet.digitalplanet;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -8,21 +10,22 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.digitalplanet.digitalplanet.fragment.*;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MenuItemCompat.OnActionExpandListener {
-    public static enum Mode {
-        NORMAL, REMOVE, SEARCH, SORT;
-    }
-
-    private MenuItem editMenuItem;
-    private MenuItem microMenuItem;
-    private MenuItem removeMenuItem;
-    private MenuItem searchMenuItem;
-    private MenuItem sortAbMenuItem;
-
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,28 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        CatalogFragment catalogFragment = new CatalogFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, catalogFragment);
+        fragmentTransaction.commit();
+        View headerview = navigationView.getHeaderView(0);
+        ImageButton btn_header = (ImageButton) headerview.findViewById(R.id.btn_login_action);
+        btn_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView txt_header = (TextView) headerview.findViewById(R.id.text_login_action);
+        txt_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                startActivity(intent);
+            }
+        });
+        Toast.makeText(MainActivity.this, "Created Catalog view", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -52,8 +77,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+
         return true;
     }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        Toast.makeText(this, "Searching by: "+ query, Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // User changed the text
+        return false;
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -63,6 +105,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_basket) {
 
         } else if (id == R.id.nav_catalog) {
+            CatalogFragment catalogFragment = new CatalogFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, catalogFragment);
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_delivery) {
 
@@ -74,17 +120,6 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-    @Override
-    public boolean onMenuItemActionExpand(MenuItem item) {
-
-        return true;
-    }
-
-    @Override
-    public boolean onMenuItemActionCollapse(MenuItem item) {
-
         return true;
     }
 }
