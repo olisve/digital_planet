@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_basket"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Корзина" />
+        <item
+            android:id="@+id/nav_catalog"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Каталог товаров" />
+        <item
+            android:id="@+id/nav_delivery"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Доставка и оплата" />
+        <item
+            android:id="@+id/nav_discount"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Скидки и акции" />
+        <item
+            android:id="@+id/nav_contacts"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Контакты" />
+    </group>
+
+</menu>
