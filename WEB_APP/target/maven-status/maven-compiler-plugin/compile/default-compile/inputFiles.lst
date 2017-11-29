@@ -1,1 +1,15 @@
-C:\Users\Svetlana\Desktop\digital_planet\WEB_APP\src\main\java\by\bsu\famcs\configuration\SpringMongoConfiguration.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\entities\User.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\entities\Product.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\daos\ProductDAO.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\entities\Mark.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\entities\_Order.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\daos\AbstractDAO.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\daos\UserDAO.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\utils\MongoOperationSupplier.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\controllers\TempController.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\configuration\AppInitializer.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\configuration\MongoConfiguration.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\configuration\AppConfiguration.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\daos\OrderDAO.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\entities\OrderProducts.java
+C:\Users\Svetlana\Desktop\digital-web-app\src\main\java\by\bsu\daos\MarkDAO.java

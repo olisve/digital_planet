@@ -1,1 +1,15 @@
-by\bsu\famcs\configuration\SpringMongoConfiguration.class
+by\bsu\daos\MarkDAO.class
+by\bsu\controllers\TempController.class
+by\bsu\configuration\AppInitializer.class
+by\bsu\daos\AbstractDAO.class
+by\bsu\entities\Product.class
+by\bsu\entities\User.class
+by\bsu\entities\Mark.class
+by\bsu\utils\MongoOperationSupplier.class
+by\bsu\daos\ProductDAO.class
+by\bsu\configuration\AppConfiguration.class
+by\bsu\daos\OrderDAO.class
+by\bsu\configuration\MongoConfiguration.class
+by\bsu\entities\_Order.class
+by\bsu\daos\UserDAO.class
+by\bsu\entities\OrderProducts.class
