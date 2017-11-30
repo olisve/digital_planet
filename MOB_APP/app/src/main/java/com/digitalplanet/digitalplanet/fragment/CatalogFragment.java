@@ -36,10 +36,10 @@ public class CatalogFragment  extends Fragment {
         names.add("Мобильные телефоны");
         names.add("TV");
         names.add("Камеры");
-        drowable_ids.add(R.drawable.ic_menu_camera);
-        drowable_ids.add(R.drawable.ic_menu_gallery);
-        drowable_ids.add(R.drawable.ic_menu_send);
-        drowable_ids.add(R.drawable.ic_menu_share);
+        drowable_ids.add(R.drawable.ic_weekend_black_24dp);
+        drowable_ids.add(R.drawable.ic_phone_android_black_24dp);
+        drowable_ids.add(R.drawable.ic_tv_black_24dp);
+        drowable_ids.add(R.drawable.ic_photo_camera_black_24dp);
         View v = inflater.inflate(R.layout.content_main, container, false);
         LinearLayout layout = v.findViewById(R.id.button_layout_add);
         DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
@@ -51,10 +51,9 @@ public class CatalogFragment  extends Fragment {
             btnTag.setLayoutParams(params);
             btnTag.setText(names.get(i));
             btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f);
-            btnTag.setPadding(0, (int) (metrics.density * 10.0f + 0.5f), 0, (int) (metrics.density * 10.0f + 0.5f));
+            btnTag.setPadding((int) (metrics.density * 20.0f + 0.5f), (int) (metrics.density * 10.0f + 0.5f), (int) (metrics.density * 20.0f + 0.5f), (int) (metrics.density * 10.0f + 0.5f));
             btnTag.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_item_shape));
             btnTag.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(drowable_ids.get(i)), null, null, null);
-
             btnTag.setId(i);
             btnTag.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -63,7 +62,7 @@ public class CatalogFragment  extends Fragment {
 
                     FragmentTransaction fragmentTransaction = CatalogFragment.this.getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(((View)CatalogFragment.this.getView().getParent()).getId(), catalogListFragment);
-                    Toast.makeText(getContext(), "Found"+String.valueOf(CatalogFragment.this.getFragmentManager()), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getContext(), "Found"+String.valueOf(CatalogFragment.this.getFragmentManager()), Toast.LENGTH_LONG).show();
                     fragmentTransaction.commit();
                 }
             });
@@ -78,7 +77,7 @@ public class CatalogFragment  extends Fragment {
             btnTag.setLayoutParams(params);
             btnTag.setText(names.get(i));
             btnTag.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14f);
-            btnTag.setPadding(0, (int) (metrics.density * 10.0f + 0.5f), 0, (int) (metrics.density * 10.0f + 0.5f));
+            btnTag.setPadding((int) (metrics.density * 20.0f + 0.5f), (int) (metrics.density * 10.0f + 0.5f), (int) (metrics.density * 20.0f + 0.5f), (int) (metrics.density * 10.0f + 0.5f));
             btnTag.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_item_shape));
             btnTag.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(drowable_ids.get(i)), null, null, null);
 

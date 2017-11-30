@@ -4,12 +4,12 @@
     <item
         android:id="@+id/action_search"
         android:title="@android:string/search_go"
-        android:icon="@drawable/ic_menu_camera"
+        android:icon="@drawable/ic_search_black_24dp"
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
         android:id="@+id/action_basket"
         android:title="Корзина"
-        android:icon="@drawable/ic_menu_gallery"
+        android:icon="@drawable/ic_menu_cart_white"
         app:showAsAction="ifRoom" />
 </menu>

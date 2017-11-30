@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fitsSystemWindows="true"
     tools:context="com.digitalplanet.digitalplanet.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_main"
+    android:background="@color/colorPrimaryBack">
     <LinearLayout
         android:id="@+id/button_layout_add"
         android:orientation="vertical"

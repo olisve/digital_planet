@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-        Toast.makeText(MainActivity.this, "Created Catalog view", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Created Catalog view", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(this, "Searching by: "+ query, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Поиск по: "+ query, Toast.LENGTH_SHORT).show();
         return false;
     }
 

@@ -6,23 +6,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_basket"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_menu_cart"
             android:title="Корзина" />
         <item
             android:id="@+id/nav_catalog"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_catalog"
             android:title="Каталог товаров" />
         <item
             android:id="@+id/nav_delivery"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_local_shipping_black_24px"
             android:title="Доставка и оплата" />
         <item
             android:id="@+id/nav_discount"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_whatshot_black_24dp"
             android:title="Скидки и акции" />
         <item
             android:id="@+id/nav_contacts"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_menu_contacts"
             android:title="Контакты" />
     </group>
 
