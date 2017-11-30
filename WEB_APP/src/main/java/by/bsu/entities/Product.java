@@ -1,5 +1,6 @@
 package by.bsu.entities;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Map;
@@ -7,11 +8,28 @@ import java.util.Map;
 @Document(collection = "products")
 public class Product {
 
+    @Id
+    private String _id;
+
     private String name;
-    private String category;
+
+    private Category category;
+
     private String description;
+
     private String image;
+
+    private int price;
+
     private Map<String, String> characteristics;
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getName() {
         return name;
@@ -21,11 +39,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -45,6 +63,14 @@ public class Product {
         this.image = image;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public Map<String, String> getCharacteristics() {
         return characteristics;
     }
@@ -60,31 +86,24 @@ public class Product {
 
         Product product = (Product) o;
 
+        if (getPrice() != product.getPrice()) return false;
+        if (!get_id().equals(product.get_id())) return false;
         if (!getName().equals(product.getName())) return false;
         if (!getCategory().equals(product.getCategory())) return false;
         if (!getDescription().equals(product.getDescription())) return false;
-        if (!getImage().equals(product.getImage())) return false;
+        if (getImage() != null ? !getImage().equals(product.getImage()) : product.getImage() != null) return false;
         return getCharacteristics().equals(product.getCharacteristics());
     }
 
     @Override
     public int hashCode() {
-        int result = getName().hashCode();
+        int result = get_id().hashCode();
+        result = 31 * result + getName().hashCode();
         result = 31 * result + getCategory().hashCode();
         result = 31 * result + getDescription().hashCode();
-        result = 31 * result + getImage().hashCode();
+        result = 31 * result + (getImage() != null ? getImage().hashCode() : 0);
+        result = 31 * result + getPrice();
         result = 31 * result + getCharacteristics().hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                ", image='" + image + '\'' +
-                ", characteristics=" + characteristics +
-                '}';
     }
 }
