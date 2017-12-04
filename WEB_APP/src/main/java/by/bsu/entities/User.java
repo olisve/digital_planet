@@ -1,16 +1,26 @@
 package by.bsu.entities;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
 public class User {
 
+    @Id
+    private String _id;
+
     private String email;
+
     private String password;
+
     private String firstName;
+
     private String lastName;
+
     private String address;
+
     private String phone;
+
     private String role;
 
     public String getEmail() {

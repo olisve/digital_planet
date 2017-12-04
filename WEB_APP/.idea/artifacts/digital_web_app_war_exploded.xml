@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="digital-web-app:war exploded">
-    <output-path>$PROJECT_DIR$/target/Spring4MVCHelloWorldNoXMLDemo</output-path>
+    <output-path>$PROJECT_DIR$/target/digital-web-app</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -10,6 +10,8 @@
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
           <element id="library" level="project" name="Maven: javax.servlet.jsp:javax.servlet.jsp-api:2.3.1" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.2.2" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:21.0" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-mongodb:1.8.2.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.9.RELEASE" />
@@ -18,7 +20,6 @@
           <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:2.13.0" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.13" />
           <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.13" />
-          <element id="library" level="project" name="Maven: com.google.guava:guava:21.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.2.4.RELEASE" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:4.2.4.RELEASE" />
@@ -31,7 +32,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/Spring4MVCHelloWorldNoXMLDemo/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/digital-web-app/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="digital-web-app/web/Web" />
     </root>
