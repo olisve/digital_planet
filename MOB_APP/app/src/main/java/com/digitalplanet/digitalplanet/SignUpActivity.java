@@ -122,6 +122,7 @@ public class SignUpActivity extends AppCompatActivity {
                 phoneText.setError(null);
             }
 
+
             if (postal.isEmpty()) {
                 postalText.setError("введите домашний адрес");
                 valid = false;
