@@ -11,6 +11,8 @@ public class Category {
 
     private String name;
 
+    private String requestName;
+
     public String get_id() {
         return _id;
     }
@@ -27,6 +29,14 @@ public class Category {
         this.name = name;
     }
 
+    public String getRequestName() {
+        return requestName;
+    }
+
+    public void setRequestName(String requestName) {
+        this.requestName = requestName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -35,13 +45,15 @@ public class Category {
         Category category = (Category) o;
 
         if (!get_id().equals(category.get_id())) return false;
-        return getName().equals(category.getName());
+        if (!getName().equals(category.getName())) return false;
+        return getRequestName().equals(category.getRequestName());
     }
 
     @Override
     public int hashCode() {
         int result = get_id().hashCode();
         result = 31 * result + getName().hashCode();
+        result = 31 * result + getRequestName().hashCode();
         return result;
     }
 }

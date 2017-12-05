@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository("CategoryDAO")
 public class CategoryDAO extends AbstractDAO<Category>{
 
-    public Category findByName(String name) {
+    public Category findByRequestName(String requestName) {
         MongoOperations mo = new MongoOperationSupplier().get();
-        Query searchUserQuery = new Query(Criteria.where("name").is(name));
+        Query searchUserQuery = new Query(Criteria.where("requestName").is(requestName));
         Category category = mo.findOne(searchUserQuery, Category.class);
         return category;
     }

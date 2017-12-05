@@ -4,7 +4,6 @@ import by.bsu.daos.CategoryDAO;
 import by.bsu.daos.ProductDAO;
 import by.bsu.entities.Category;
 import by.bsu.entities.Product;
-import by.bsu.utils.CategoryNames;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -27,13 +26,16 @@ public class ProductService {
     }
 
     public List<Product> getProductsByCategory(String category){
-        CategoryNames categoryName = CategoryNames.valueOf(category);
-        Category categoryObj = categoryDAO.findByName(categoryName.getName());
+        Category categoryObj = categoryDAO.findByRequestName(category);
         return productDAO.findByCategory(categoryObj);
     }
 
     public Product findProductById(String id){
         return productDAO.findById(id);
+    }
+
+    public List<Category> getCategoriesList(){
+        return categoryDAO.readAll();
     }
 
 }

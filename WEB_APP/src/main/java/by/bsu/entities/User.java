@@ -21,7 +21,13 @@ public class User {
 
     private String phone;
 
-    private String role;
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getEmail() {
         return email;
@@ -71,14 +77,6 @@ public class User {
         this.phone = phone;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,40 +84,14 @@ public class User {
 
         User user = (User) o;
 
-        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
-        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
-            return false;
-        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null)
-            return false;
-        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null)
-            return false;
-        if (getAddress() != null ? !getAddress().equals(user.getAddress()) : user.getAddress() != null) return false;
-        if (getPhone() != null ? !getPhone().equals(user.getPhone()) : user.getPhone() != null) return false;
-        return getRole() != null ? getRole().equals(user.getRole()) : user.getRole() == null;
+        if (!get_id().equals(user.get_id())) return false;
+        return getEmail().equals(user.getEmail());
     }
 
     @Override
     public int hashCode() {
-        int result = getEmail() != null ? getEmail().hashCode() : 0;
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
-        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
-        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
-        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
+        int result = get_id().hashCode();
+        result = 31 * result + getEmail().hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", role='" + role + '\'' +
-                '}';
     }
 }

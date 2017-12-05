@@ -1,6 +1,8 @@
 package by.bsu.controllers;
 
+import by.bsu.daos.CategoryDAO;
 import by.bsu.daos.ProductDAO;
+import by.bsu.entities.Category;
 import by.bsu.entities.Product;
 import by.bsu.services.ProductService;
 import com.google.gson.Gson;
@@ -28,16 +30,30 @@ public class ProductController {
     @Qualifier("ProductDAO")
     ProductDAO productDAO;
 
+    @Autowired
+    @Qualifier("CategoryDAO")
+    CategoryDAO categoryDAO;
+
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public @ResponseBody String getAllProducts() {
         List<Product> productList = productService.getAllProducts();
+        List<Category> categoriesList = productService.getCategoriesList();
+
+        productList.get(0).setCategory(categoriesList.get(1));
+        productList.get(1).setCategory(categoriesList.get(0));
+        productList.get(2).setCategory(categoriesList.get(0));
+        productList.get(3).setCategory(categoriesList.get(1));
+        productDAO.update(productList.get(0));
+        productDAO.update(productList.get(1));
+        productDAO.update(productList.get(2));
+        productDAO.update(productList.get(3));
         String json = new Gson().toJson(productList);
         return json;
     }
 
     @RequestMapping(value = "/products_by_category", method = RequestMethod.GET)
     public @ResponseBody String getProductsByCategory(@ModelAttribute(value="category") String category) {
-        List<Product> productList = productService.getProductsByCategory(category.toUpperCase());
+        List<Product> productList = productService.getProductsByCategory(category.toLowerCase());
         String json = new Gson().toJson(productList);
         return json;
     }
@@ -63,7 +79,14 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "/insert", method = RequestMethod.GET)
+    @RequestMapping(value = "/get_categories", method = RequestMethod.GET)
+    public @ResponseBody String getCategoriesList() {
+        List<Category> categoriesList = productService.getCategoriesList();
+        String json = new Gson().toJson(categoriesList);
+        return json;
+    }
+
+  /*  @RequestMapping(value = "/insert", method = RequestMethod.GET)
     public @ResponseBody String insertAll(ModelMap model) {
 
         List<Product> productList = productService.getAllProducts();
@@ -117,6 +140,6 @@ public class ProductController {
 
         productDAO.create(tab2);*/
 
-        return "";
-    }
+    //    return "";
+    //}*/
 }
