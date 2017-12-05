@@ -30,20 +30,21 @@ public class MainActivity extends AppCompatActivity
     public MenuItem filterItem;
     public MenuItem basketItem;
     private MenuItem menuItem;
-
+    private ActionBarDrawerToggle drawerToggle;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawerToggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer.addDrawerListener(drawerToggle);
 
+        drawerToggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         CatalogFragment catalogFragment = new CatalogFragment();
@@ -79,8 +80,40 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void setDrawer(boolean enable) {
+        //drawerToggle.setDrawerIndicatorEnabled(enable);
+        if(!enable){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        } else {
+            final DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            //show hamburger
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            drawerToggle.syncState();
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            });
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         searchItem = menu.findItem(R.id.action_search);
         filterItem = menu.findItem(R.id.action_filter);
@@ -108,13 +141,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.nav_basket) {
 
         } else if (id == R.id.nav_catalog) {
             CatalogFragment catalogFragment = new CatalogFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, catalogFragment);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
         } else if (id == R.id.nav_delivery) {

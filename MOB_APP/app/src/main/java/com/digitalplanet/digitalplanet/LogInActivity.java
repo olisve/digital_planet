@@ -32,7 +32,6 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
         signupLink.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // Start the Signup activity

@@ -27,7 +27,7 @@ import java.util.List;
  * Created by marija.savtchouk on 29.11.2017.
  */
 
-public class CatalogFragment  extends Fragment {
+public class CatalogFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -62,6 +62,7 @@ public class CatalogFragment  extends Fragment {
         mAdapter = new CatalogFragment.CategoryAdapter(categories);
         mRecyclerView.setAdapter(mAdapter);
         ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
         searchCategories();
     }
     @Override
@@ -136,6 +137,7 @@ public class CatalogFragment  extends Fragment {
                     bundle.putString("Category_ID", f.get_id()); // ID
                     catalogListFragment.setArguments(bundle);
                     fragmentTransaction.replace(((View)CatalogFragment.this.getView().getParent()).getId(), catalogListFragment);
+                    fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }
             });

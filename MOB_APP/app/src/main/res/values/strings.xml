@@ -2,8 +2,8 @@
     <string name="app_name">Digital Planet</string>
     <string name="filter">Фильтр</string>
     <string name="price">Цена</string>
-    <string name="from">от</string>
-    <string name="to">до</string>
+    <string name="from">от (бел. руб.)</string>
+    <string name="to">до (бел. руб.)</string>
     <string name="producer">Производитель</string>
     <string name="apply">Применить</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,19 +28,22 @@ import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.Product;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by marija.savtchouk on 05.12.2017.
  */
 
-public class FilterFragment extends Fragment {
+public class FilterFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private List<String> producers = new ArrayList<>();
+    public Set<String> selectedItems = new HashSet<>();
     public String categoryName;
     public String categoryId;
 
@@ -70,6 +75,35 @@ public class FilterFragment extends Fragment {
         mAdapter = new FilterFragment.ProducersAdapter(producers);
         mRecyclerView.setAdapter(mAdapter);
         ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.filter));
+        final EditText fromText = view.findViewById(R.id.input_price_from);
+        final EditText toText = view.findViewById(R.id.input_price_to);
+        ((Button) view.findViewById(R.id.btn_apply)).setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                int size = selectedItems.size();
+                String from = fromText.getText().toString();
+                String to = toText.getText().toString();
+                Toast.makeText(getContext(), "Number of items selected="+size +"from="+from+"to="+to, Toast.LENGTH_LONG).show();
+                try {
+                    Thread.sleep(1000);
+                }catch (Exception e){}
+                CatalogListView catalogListFragment = new CatalogListView();
+                FragmentTransaction fragmentTransaction = FilterFragment.this.getFragmentManager().beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putString("Category_Name", categoryName); // Name
+                bundle.putString("Category_ID", categoryId); // ID
+                bundle.putStringArrayList("Producers", new ArrayList<String>(selectedItems));
+                bundle.putString("Price_From", from);
+                bundle.putString("Price_To", to);
+                catalogListFragment.setArguments(bundle);
+                fragmentTransaction.replace(((View)FilterFragment.this.getView().getParent()).getId(), catalogListFragment);
+                fragmentTransaction.commit();
+
+            }
+        });
+        // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         searchProducers();
     }
 
@@ -122,9 +156,21 @@ public class FilterFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(FilterFragment.ProducersAdapter.ViewHolder holder, final int position) {
-            String f = mDataset.get(position);
+        public void onBindViewHolder(final FilterFragment.ProducersAdapter.ViewHolder holder, final int position) {
+            final String f = mDataset.get(position);
+
             holder.tvTitle.setText(f);
+            holder.tvTitle.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    //holder.tvTitle.setChecked(!holder.tvTitle.isChecked());
+                    if (holder.tvTitle.isChecked()) {
+                        FilterFragment.this.selectedItems.add(f);
+                    } else {
+                        FilterFragment.this.selectedItems.remove(f);
+                    }
+                }
+            });
         }
 
         @Override
