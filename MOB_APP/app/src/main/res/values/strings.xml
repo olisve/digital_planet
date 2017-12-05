@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Digital Planet</string>
-
+    <string name="filter">Фильтр</string>
+    <string name="price">Цена</string>
+    <string name="from">от</string>
+    <string name="to">до</string>
+    <string name="producer">Производитель</string>
+    <string name="apply">Применить</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

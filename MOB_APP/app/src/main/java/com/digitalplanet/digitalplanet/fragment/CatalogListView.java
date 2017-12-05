@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +15,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,17 +49,24 @@ public class CatalogListView   extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private List<Product> products = new ArrayList<>();
-    private String categoryName;
-    private String categoryId;
+    public String categoryName;
+    public String categoryId;
+
     public CatalogListView() {
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         categoryName = getArguments().getString("Category_Name");
         categoryId = getArguments().getString("Category_ID");
+
         return inflater.inflate(R.layout.catalog_list_main, container, false);
     }
 
@@ -70,6 +82,30 @@ public class CatalogListView   extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(categoryName);
         searchItems();
+
+    }
+
+    @Override
+    public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.findItem(R.id.action_search).setVisible(true);
+        menu.findItem(R.id.action_filter).setVisible(true);
+
+        menu.findItem(R.id.action_filter).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                FilterFragment filterFragment = new FilterFragment();
+
+                FragmentTransaction fragmentTransaction = CatalogListView.this.getFragmentManager().beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putString("Category_Name", CatalogListView.this.categoryName); // Name
+                bundle.putString("Category_ID", CatalogListView.this.categoryId); // ID
+                filterFragment.setArguments(bundle);
+                fragmentTransaction.replace(((View) CatalogListView.this.getView().getParent()).getId(), filterFragment);
+                fragmentTransaction.commit();
+                return false;
+            }
+        });
     }
 
     public void searchItems() {

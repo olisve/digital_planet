@@ -5,15 +5,19 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.digitalplanet.digitalplanet.MainActivity;
 import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.Category;
 import java.util.ArrayList;
@@ -34,6 +38,13 @@ public class CatalogFragment  extends Fragment {
     public CatalogFragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,7 +61,15 @@ public class CatalogFragment  extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new CatalogFragment.CategoryAdapter(categories);
         mRecyclerView.setAdapter(mAdapter);
+        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
         searchCategories();
+    }
+    @Override
+    public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.findItem(R.id.action_search).setVisible(true);
+        menu.findItem(R.id.action_filter).setVisible(false);
+        menu.findItem(R.id.action_basket).setVisible(true);
     }
 
     public void searchCategories() {
@@ -117,7 +136,6 @@ public class CatalogFragment  extends Fragment {
                     bundle.putString("Category_ID", f.get_id()); // ID
                     catalogListFragment.setArguments(bundle);
                     fragmentTransaction.replace(((View)CatalogFragment.this.getView().getParent()).getId(), catalogListFragment);
-                    //Toast.makeText(getContext(), "Found"+String.valueOf(CatalogFragment.this.getFragmentManager()), Toast.LENGTH_LONG).show();
                     fragmentTransaction.commit();
                 }
             });
