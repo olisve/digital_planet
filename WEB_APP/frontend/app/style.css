@@ -1,0 +1,100 @@
+
+.navbar {
+    margin-bottom: 0;
+    background-color: #1976D2;
+    letter-spacing: 4px;
+    border-radius: 2px;
+    color: #fff;
+}
+
+.navbar li a, .navbar .navbar-brand {
+    color: #fff;
+    background-color: #1976D2;
+}
+
+.navbar-nav li a:hover, .navbar-nav li.active a {
+    color: #fff;
+    text-decoration: underline;
+    background-color: #1976D2;
+}
+
+.navbar-right{
+    letter-spacing: 1px;
+}
+
+.navbar1 {
+    background-color: #f5f5f5;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    color: #000;
+    text-decoration: none;
+}
+
+.navbar1 li a, .navbar .navbar-brand {
+    color: #000;
+    background-color: #f5f5f5;
+    text-align: center;
+    float: none;
+    text-decoration: none;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.navbar1 li a:hover{
+    color: #fff;
+    text-decoration: none;
+    background-color: #1976D2;
+}
+
+.jumbotron {
+    min-height: 50px;
+    padding-bottom: 0;
+    padding-top: 0;
+    margin: 0;
+}
+
+footer {
+    background-color: #1976D2;
+    padding: 10px;
+    max-height: 80px;
+    color: #fff;
+}
+
+footer p {
+    padding: 0;
+    margin: 0;
+}
+
+.footerlogoimg{
+    height: 60px;
+    width: 60px;
+}
+
+.logo{
+    font-size: 50px;
+    font-family:  "Khmer UI";
+}
+
+.logosearch{
+    padding-top: 50px;
+    padding-bottom: 40px;
+}
+
+.logoimg{
+    height: 120px;
+    width: 120px;
+}
+
+.logofooter{
+    font-size: 20px;
+}
+
+.mainpageprice{
+    font-size: 20px;
+    color: #169BD5;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
