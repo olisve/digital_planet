@@ -12,11 +12,13 @@ public class Product {
 
     private String name;
 
+    private String brand;
+
     private Category category;
 
     private String description;
 
-    private String image;
+    private String imagePath;
 
     private int price;
 
@@ -38,6 +40,14 @@ public class Product {
         this.name = name;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -54,12 +64,12 @@ public class Product {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public int getPrice() {
@@ -88,9 +98,10 @@ public class Product {
         if (getPrice() != product.getPrice()) return false;
         if (!get_id().equals(product.get_id())) return false;
         if (!getName().equals(product.getName())) return false;
+        if (!getBrand().equals(product.getBrand())) return false;
         if (!getCategory().equals(product.getCategory())) return false;
         if (!getDescription().equals(product.getDescription())) return false;
-        if (getImage() != null ? !getImage().equals(product.getImage()) : product.getImage() != null) return false;
+        if (!getImagePath().equals(product.getImagePath())) return false;
         return getCharacteristics().equals(product.getCharacteristics());
     }
 
@@ -98,9 +109,10 @@ public class Product {
     public int hashCode() {
         int result = get_id().hashCode();
         result = 31 * result + getName().hashCode();
+        result = 31 * result + getBrand().hashCode();
         result = 31 * result + getCategory().hashCode();
         result = 31 * result + getDescription().hashCode();
-        result = 31 * result + (getImage() != null ? getImage().hashCode() : 0);
+        result = 31 * result + getImagePath().hashCode();
         result = 31 * result + getPrice();
         result = 31 * result + getCharacteristics().hashCode();
         return result;

@@ -1,5 +1,6 @@
 package com.digitalplanet.digitalplanet;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -141,14 +142,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
+        int index = this.getFragmentManager().getBackStackEntryCount() - 1;
+        android.support.v4.app.FragmentTransaction fragmentTransaction = null;
         if (id == R.id.nav_basket) {
 
         } else if (id == R.id.nav_catalog) {
             CatalogFragment catalogFragment = new CatalogFragment();
-            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.frame, catalogFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_delivery) {
 
@@ -156,6 +157,16 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_contacts) {
 
+        }
+        if(fragmentTransaction!=null) {
+            if(index>=0) {
+                FragmentManager.BackStackEntry backEntry = getFragmentManager().getBackStackEntryAt(index);
+                String tag = backEntry.getName();
+                if(tag!=String.valueOf(id)) {
+                    fragmentTransaction.addToBackStack(String.valueOf(id));
+                }
+            }
+            fragmentTransaction.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -85,9 +85,6 @@ public class FilterFragment extends BaseFragment {
                 String from = fromText.getText().toString();
                 String to = toText.getText().toString();
                 Toast.makeText(getContext(), "Number of items selected="+size +"from="+from+"to="+to, Toast.LENGTH_LONG).show();
-                try {
-                    Thread.sleep(1000);
-                }catch (Exception e){}
                 CatalogListView catalogListFragment = new CatalogListView();
                 FragmentTransaction fragmentTransaction = FilterFragment.this.getFragmentManager().beginTransaction();
                 Bundle bundle = new Bundle();
@@ -98,6 +95,7 @@ public class FilterFragment extends BaseFragment {
                 bundle.putString("Price_To", to);
                 catalogListFragment.setArguments(bundle);
                 fragmentTransaction.replace(((View)FilterFragment.this.getView().getParent()).getId(), catalogListFragment);
+                getFragmentManager().popBackStack();
                 fragmentTransaction.commit();
 
             }

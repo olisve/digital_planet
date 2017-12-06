@@ -33,12 +33,15 @@ import android.widget.Toast;
 
 import com.digitalplanet.digitalplanet.MainActivity;
 import com.digitalplanet.digitalplanet.R;
+import com.digitalplanet.digitalplanet.dal.APIConstants;
 import com.digitalplanet.digitalplanet.dal.ConnectionException;
 import com.digitalplanet.digitalplanet.dal.Product;
+import com.digitalplanet.digitalplanet.dal.ProductLoader;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.squareup.picasso.Picasso;
 /**
  * Created by marija.savtchouk on 29.11.2017.
  */
@@ -50,6 +53,7 @@ public class CatalogListView   extends BaseFragment {
 
     private List<Product> products = new ArrayList<>();
     public String categoryName;
+    public String categoryLongName;
     public String categoryId;
 
     public CatalogListView() {
@@ -66,7 +70,7 @@ public class CatalogListView   extends BaseFragment {
                              Bundle savedInstanceState) {
         categoryName = getArguments().getString("Category_Name");
         categoryId = getArguments().getString("Category_ID");
-
+        categoryLongName = getArguments().getString("Category_Long_Name");
         return inflater.inflate(R.layout.catalog_list_main, container, false);
     }
 
@@ -80,7 +84,7 @@ public class CatalogListView   extends BaseFragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ProductAdapter(products);
         mRecyclerView.setAdapter(mAdapter);
-        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(categoryName);
+        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(categoryLongName);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -114,7 +118,7 @@ public class CatalogListView   extends BaseFragment {
 
     public void searchItems() {
         LoadTask ps = new LoadTask(getContext());
-        ps.execute("Category");
+        ps.execute(categoryName);
     }
 
     public void showItems(List<Product> _products) {
@@ -182,8 +186,12 @@ public class CatalogListView   extends BaseFragment {
                         }
                     }
             );
-
-            holder.ivPhoto.setBackgroundColor(getResources().getColor(R.color.colorAccentBack));
+            if (f.getImagePath() != null && !f.getImagePath().isEmpty()) {
+                String url = APIConstants.SERVICE_ROOT + APIConstants.IMAGE_REQUEST + "?" + APIConstants.URL_PARAM + f.getImagePath();
+                Picasso.with(getContext()).load(url).into(holder.ivPhoto);
+            } else {
+                holder.ivPhoto.setBackgroundColor(getResources().getColor(R.color.colorAccentBack));
+            }
         }
 
         @Override
@@ -203,7 +211,7 @@ public class CatalogListView   extends BaseFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress= new ProgressDialog(this.context);
+            progress = new ProgressDialog(this.context);
             progress.setMessage("Загрузка товаров...");
             progress.show();
         }
@@ -217,19 +225,15 @@ public class CatalogListView   extends BaseFragment {
 
         @Override
         protected List<Product> doInBackground(String... params) {
-            ArrayList<Product> productes = new ArrayList<Product>();
-            for(int i = 0; i < 5; i++) {
-                Product p = new Product();
-                p.set_id("ID#"+i);
-                p.setDescription("Прекрасный продукт для всей семьи. Излечит вас от всех болезней. Прекрасная цена. Ознакомтесь с отзывами.");
-                p.setName("Samsung Galaxy X 10");
-                p.setPrice(560);
-                productes.add(p);
-            }
+            ArrayList<Product> products = new ArrayList<Product>();
+            ProductLoader loader = new ProductLoader(context);
+            String category = params[0];
             try {
-                Thread.sleep(1000);
-            }catch (Exception e){}
-            return productes;
+                products = loader.getProductsByCategory(category);
+            } catch (ConnectionException e) {
+                Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show();
+            }
+            return products;
         }
     }
 

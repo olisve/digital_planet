@@ -25,7 +25,8 @@
             <ImageView
                 android:id="@+id/iv_item_photo"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"/>
+                android:layout_height="150dp"
+                android:src="@drawable/ic_photo_camera_black_24dp"/>
 
             <TextView
                 android:id="@+id/tv_item_title"

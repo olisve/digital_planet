@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,10 @@ import android.widget.Toast;
 import com.digitalplanet.digitalplanet.MainActivity;
 import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.Category;
+import com.digitalplanet.digitalplanet.dal.CategoryLoader;
+import com.digitalplanet.digitalplanet.dal.ConnectionException;
+import com.digitalplanet.digitalplanet.dal.ProductLoader;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,7 +129,7 @@ public class CatalogFragment extends BaseFragment {
             drowable_ids.add(R.drawable.ic_phone_android_black_24dp);
             drowable_ids.add(R.drawable.ic_tv_black_24dp);
             drowable_ids.add(R.drawable.ic_photo_camera_black_24dp);
-            int i = Integer.parseInt(Character.toString(id.charAt(id.length()-1)));
+            int i = position%drowable_ids.size();
             holder.bCategory.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(drowable_ids.get(i)), null, null, null);
             holder.bCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -133,7 +138,8 @@ public class CatalogFragment extends BaseFragment {
 
                     FragmentTransaction fragmentTransaction = CatalogFragment.this.getFragmentManager().beginTransaction();
                     Bundle bundle = new Bundle();
-                    bundle.putString("Category_Name", f.getName()); // Name
+                    bundle.putString("Category_Name", f.getRequestName()); // Name
+                    bundle.putString("Category_Long_Name", f.getName()); // Name
                     bundle.putString("Category_ID", f.get_id()); // ID
                     catalogListFragment.setArguments(bundle);
                     fragmentTransaction.replace(((View)CatalogFragment.this.getView().getParent()).getId(), catalogListFragment);
@@ -173,21 +179,13 @@ public class CatalogFragment extends BaseFragment {
 
         @Override
         protected List<Category> doInBackground(String... params) {
-            ArrayList<String> names = new ArrayList<String>();
-            names.add("Бытовая техника");
-            names.add("Мобильные телефоны");
-            names.add("TV");
-            names.add("Камеры");
             ArrayList<Category> categories = new ArrayList<Category>();
-            for(int i = 0; i < names.size(); i++) {
-                Category c = new Category();
-                c.set_id("ID#"+i);
-                c.setName(names.get(i));
-                categories.add(c);
-            }
+            CategoryLoader loader = new CategoryLoader(context);
             try {
-                Thread.sleep(1000);
-            }catch (Exception e){}
+                categories = loader.getAllCategories();
+            } catch (ConnectionException e) {
+                Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show();
+            }
             return categories;
         }
     }
