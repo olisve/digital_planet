@@ -27,9 +27,10 @@ public abstract class BaseFragment extends Fragment implements FragmentManager.O
     public abstract View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -54,10 +55,10 @@ public abstract class BaseFragment extends Fragment implements FragmentManager.O
 
     @Override
     public void onBackStackChanged() {
-        if(getFragmentManager()!=null) {
+        if (getFragmentManager() != null) {
             int backStackEntryCount = getFragmentManager().getBackStackEntryCount();
             mainActivity.setDrawer(backStackEntryCount == 0);
-        }else{
+        } else {
             int backStackEntryCount = mainActivity.getSupportFragmentManager().getBackStackEntryCount();
             mainActivity.setDrawer(backStackEntryCount == 0);
         }

@@ -15,32 +15,53 @@ import java.util.Scanner;
  * Created by marija.savtchouk on 06.12.2017.
  */
 
-public class ProductLoader extends BaseLoader{
+public class ProductLoader extends BaseLoader {
 
-    public ProductLoader(Context context){
+    public ProductLoader(Context context) {
         super(context);
     }
 
     public ArrayList<Product> getProductsByCategory(String category) throws ConnectionException {
         String url = APIConstants.SERVICE_ROOT + APIConstants.PRODUCTS_BY_CATEGORY_REQUEST + "?" + APIConstants.CATEGORY_PARAM + category;
         try {
-            if(hasConnection()) {
+            if (hasConnection()) {
                 URL url_obj = new URL(url);
                 URLConnection conn = url_obj.openConnection();
                 Scanner stream = new Scanner(conn.getInputStream());
                 String lineResponse = stream.nextLine();
                 Gson json = new Gson();
-                Type type = new TypeToken<ArrayList<Product>>(){}.getType();
-                ArrayList<Product> products  = json.fromJson(lineResponse, type);
+                Type type = new TypeToken<ArrayList<Product>>() {
+                }.getType();
+                ArrayList<Product> products = json.fromJson(lineResponse, type);
                 return products;
             } else {
                 throw new ConnectionException();
             }
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ConnectionException();
         }
-        catch (ConnectionException e) {
-            throw  e;
-        }
-        catch (Exception e) {
+    }
+
+    public Product getProductById(String id) throws ConnectionException {
+        String url = APIConstants.SERVICE_ROOT + APIConstants.PRODUCT_REQUEST + "?" + APIConstants.ID_PARAM + id;
+        try {
+            if (hasConnection()) {
+                URL url_obj = new URL(url);
+                URLConnection conn = url_obj.openConnection();
+                Scanner stream = new Scanner(conn.getInputStream());
+                String lineResponse = stream.nextLine();
+                Gson json = new Gson();
+                Product product = json.fromJson(lineResponse, Product.class);
+                return product;
+            } else {
+                throw new ConnectionException();
+            }
+        } catch (ConnectionException e) {
+            throw e;
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ConnectionException();
         }

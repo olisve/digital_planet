@@ -84,7 +84,7 @@ public class CatalogListView   extends BaseFragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ProductAdapter(products);
         mRecyclerView.setAdapter(mAdapter);
-        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(categoryLongName);
+        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(categoryLongName);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -93,7 +93,7 @@ public class CatalogListView   extends BaseFragment {
     }
 
     @Override
-    public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.action_search).setVisible(true);
         menu.findItem(R.id.action_filter).setVisible(true);
@@ -158,7 +158,7 @@ public class CatalogListView   extends BaseFragment {
 
         @Override
         public ProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                              int viewType) {
+                                                            int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_layout, parent, false);
             ViewHolder vh = new ViewHolder(v);
@@ -170,7 +170,7 @@ public class CatalogListView   extends BaseFragment {
             Product f = mDataset.get(position);
             holder.tvDescription.setText(f.getDescription());
             holder.tvTitle.setText(f.getName());
-            holder.tvPrice.setText(String.valueOf(f.getPrice())+" бел. руб.");
+            holder.tvPrice.setText(String.valueOf(f.getPrice()) + " бел. руб.");
             final String id = products.get(position).get_id();
             holder.bBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -182,7 +182,15 @@ public class CatalogListView   extends BaseFragment {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getContext(), "Товар детально id" + id, Toast.LENGTH_LONG).show();
+                            ProductFragment productFragment = new ProductFragment();
+
+                            FragmentTransaction fragmentTransaction = CatalogListView.this.getFragmentManager().beginTransaction();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("Product_ID", id); // ID
+                            productFragment.setArguments(bundle);
+                            fragmentTransaction.replace(((View)CatalogListView.this.getView().getParent()).getId(), productFragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
                         }
                     }
             );
@@ -231,11 +239,9 @@ public class CatalogListView   extends BaseFragment {
             try {
                 products = loader.getProductsByCategory(category);
             } catch (ConnectionException e) {
-                Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show();
+                return new ArrayList<>();
             }
             return products;
         }
     }
-
-
 }

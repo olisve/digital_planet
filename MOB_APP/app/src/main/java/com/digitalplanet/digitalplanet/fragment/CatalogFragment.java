@@ -66,12 +66,13 @@ public class CatalogFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new CatalogFragment.CategoryAdapter(categories);
         mRecyclerView.setAdapter(mAdapter);
-        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
         searchCategories();
     }
+
     @Override
-    public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.action_search).setVisible(true);
         menu.findItem(R.id.action_filter).setVisible(false);
@@ -112,7 +113,7 @@ public class CatalogFragment extends BaseFragment {
 
         @Override
         public CatalogFragment.CategoryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                            int viewType) {
+                                                                             int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.category_layout, parent, false);
             CatalogFragment.CategoryAdapter.ViewHolder vh = new CatalogFragment.CategoryAdapter.ViewHolder(v);
@@ -129,7 +130,7 @@ public class CatalogFragment extends BaseFragment {
             drowable_ids.add(R.drawable.ic_phone_android_black_24dp);
             drowable_ids.add(R.drawable.ic_tv_black_24dp);
             drowable_ids.add(R.drawable.ic_photo_camera_black_24dp);
-            int i = position%drowable_ids.size();
+            int i = position % drowable_ids.size();
             holder.bCategory.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(drowable_ids.get(i)), null, null, null);
             holder.bCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -142,7 +143,7 @@ public class CatalogFragment extends BaseFragment {
                     bundle.putString("Category_Long_Name", f.getName()); // Name
                     bundle.putString("Category_ID", f.get_id()); // ID
                     catalogListFragment.setArguments(bundle);
-                    fragmentTransaction.replace(((View)CatalogFragment.this.getView().getParent()).getId(), catalogListFragment);
+                    fragmentTransaction.replace(((View) CatalogFragment.this.getView().getParent()).getId(), catalogListFragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }
@@ -154,6 +155,7 @@ public class CatalogFragment extends BaseFragment {
             return mDataset.size();
         }
     }
+
     private class LoadTask extends AsyncTask<String, Void, List<Category>> {
         private final Context context;
         private ProgressDialog progress;
@@ -165,7 +167,7 @@ public class CatalogFragment extends BaseFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress= new ProgressDialog(this.context);
+            progress = new ProgressDialog(this.context);
             progress.setMessage("Загрузка каталога...");
             progress.show();
         }
@@ -184,11 +186,9 @@ public class CatalogFragment extends BaseFragment {
             try {
                 categories = loader.getAllCategories();
             } catch (ConnectionException e) {
-                Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show();
+                return new ArrayList<>();
             }
             return categories;
         }
     }
-
-
 }

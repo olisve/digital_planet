@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     private MenuItem menuItem;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity
 
     public void setDrawer(boolean enable) {
         //drawerToggle.setDrawerIndicatorEnabled(enable);
-        if(!enable){
+        if (!enable) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(this, "Поиск по: "+ query, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Поиск по: " + query, Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -158,11 +159,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_contacts) {
 
         }
-        if(fragmentTransaction!=null) {
-            if(index>=0) {
+        if (fragmentTransaction != null) {
+            if (index >= 0) {
                 FragmentManager.BackStackEntry backEntry = getFragmentManager().getBackStackEntryAt(index);
                 String tag = backEntry.getName();
-                if(tag!=String.valueOf(id)) {
+                if (tag != String.valueOf(id)) {
                     fragmentTransaction.addToBackStack(String.valueOf(id));
                 }
             }

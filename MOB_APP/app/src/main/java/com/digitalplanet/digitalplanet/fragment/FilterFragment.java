@@ -74,17 +74,17 @@ public class FilterFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new FilterFragment.ProducersAdapter(producers);
         mRecyclerView.setAdapter(mAdapter);
-        ((AppCompatActivity)this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.filter));
+        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.filter));
         final EditText fromText = view.findViewById(R.id.input_price_from);
         final EditText toText = view.findViewById(R.id.input_price_to);
-        ((Button) view.findViewById(R.id.btn_apply)).setOnClickListener(new View.OnClickListener(){
+        ((Button) view.findViewById(R.id.btn_apply)).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 int size = selectedItems.size();
                 String from = fromText.getText().toString();
                 String to = toText.getText().toString();
-                Toast.makeText(getContext(), "Number of items selected="+size +"from="+from+"to="+to, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Number of items selected=" + size + "from=" + from + "to=" + to, Toast.LENGTH_LONG).show();
                 CatalogListView catalogListFragment = new CatalogListView();
                 FragmentTransaction fragmentTransaction = FilterFragment.this.getFragmentManager().beginTransaction();
                 Bundle bundle = new Bundle();
@@ -94,7 +94,7 @@ public class FilterFragment extends BaseFragment {
                 bundle.putString("Price_From", from);
                 bundle.putString("Price_To", to);
                 catalogListFragment.setArguments(bundle);
-                fragmentTransaction.replace(((View)FilterFragment.this.getView().getParent()).getId(), catalogListFragment);
+                fragmentTransaction.replace(((View) FilterFragment.this.getView().getParent()).getId(), catalogListFragment);
                 getFragmentManager().popBackStack();
                 fragmentTransaction.commit();
 
@@ -106,7 +106,7 @@ public class FilterFragment extends BaseFragment {
     }
 
     @Override
-    public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_filter).setVisible(false);
@@ -146,7 +146,7 @@ public class FilterFragment extends BaseFragment {
 
         @Override
         public FilterFragment.ProducersAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                            int viewType) {
+                                                                             int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.producer_filter_layout, parent, false);
             FilterFragment.ProducersAdapter.ViewHolder vh = new FilterFragment.ProducersAdapter.ViewHolder(v);
@@ -158,7 +158,7 @@ public class FilterFragment extends BaseFragment {
             final String f = mDataset.get(position);
 
             holder.tvTitle.setText(f);
-            holder.tvTitle.setOnClickListener(new View.OnClickListener(){
+            holder.tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //holder.tvTitle.setChecked(!holder.tvTitle.isChecked());
@@ -188,7 +188,7 @@ public class FilterFragment extends BaseFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress= new ProgressDialog(this.context);
+            progress = new ProgressDialog(this.context);
             progress.setMessage("Загрузка параметров...");
             progress.show();
         }
@@ -210,7 +210,8 @@ public class FilterFragment extends BaseFragment {
             producers.add("Apple");
             try {
                 Thread.sleep(1000);
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
             return producers;
         }
     }
