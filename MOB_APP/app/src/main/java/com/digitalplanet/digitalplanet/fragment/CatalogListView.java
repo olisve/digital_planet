@@ -114,6 +114,17 @@ public class CatalogListView   extends BaseFragment {
                 return false;
             }
         });
+        menu.findItem(R.id.action_basket).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                BasketFragment basketFragment = new BasketFragment();
+                FragmentTransaction fragmentTransaction = CatalogListView.this.getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((View) CatalogListView.this.getView().getParent()).getId(), basketFragment);
+                fragmentTransaction.addToBackStack(String.valueOf(R.id.nav_basket));
+                fragmentTransaction.commit();
+                return false;
+            }
+        });
     }
 
     public void searchItems() {

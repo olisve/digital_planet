@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
@@ -77,6 +78,17 @@ public class CatalogFragment extends BaseFragment {
         menu.findItem(R.id.action_search).setVisible(true);
         menu.findItem(R.id.action_filter).setVisible(false);
         menu.findItem(R.id.action_basket).setVisible(true);
+        menu.findItem(R.id.action_basket).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                BasketFragment basketFragment = new BasketFragment();
+                FragmentTransaction fragmentTransaction = CatalogFragment.this.getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((View) CatalogFragment.this.getView().getParent()).getId(), basketFragment);
+                fragmentTransaction.addToBackStack(String.valueOf(R.id.nav_basket));
+                fragmentTransaction.commit();
+                return false;
+            }
+        });
     }
 
     public void searchCategories() {
@@ -126,10 +138,12 @@ public class CatalogFragment extends BaseFragment {
             holder.bCategory.setText(f.getName());
             final String id = categories.get(position).get_id();
             ArrayList<Integer> drowable_ids = new ArrayList<Integer>();
-            drowable_ids.add(R.drawable.ic_weekend_black_24dp);
             drowable_ids.add(R.drawable.ic_phone_android_black_24dp);
+            drowable_ids.add(R.drawable.ic_tablet_black_24dp);
+            drowable_ids.add(R.drawable.ic_laptop_mac_black_24dp);
             drowable_ids.add(R.drawable.ic_tv_black_24dp);
             drowable_ids.add(R.drawable.ic_photo_camera_black_24dp);
+            drowable_ids.add(R.drawable.ic_headset_black_24dp);
             int i = position % drowable_ids.size();
             holder.bCategory.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(drowable_ids.get(i)), null, null, null);
             holder.bCategory.setOnClickListener(new View.OnClickListener() {

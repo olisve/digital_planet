@@ -5,12 +5,14 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -99,6 +101,17 @@ public class ProductFragment extends BaseFragment {
         menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_filter).setVisible(false);
         menu.findItem(R.id.action_basket).setVisible(true);
+        menu.findItem(R.id.action_basket).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                BasketFragment basketFragment = new BasketFragment();
+                FragmentTransaction fragmentTransaction = ProductFragment.this.getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((View) ProductFragment.this.getView().getParent()).getId(), basketFragment);
+                fragmentTransaction.addToBackStack(String.valueOf(R.id.nav_basket));
+                fragmentTransaction.commit();
+                return false;
+            }
+        });
     }
 
     void loadProduct() {

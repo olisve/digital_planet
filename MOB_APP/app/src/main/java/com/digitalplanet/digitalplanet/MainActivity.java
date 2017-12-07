@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -120,6 +121,17 @@ public class MainActivity extends AppCompatActivity
         searchItem = menu.findItem(R.id.action_search);
         filterItem = menu.findItem(R.id.action_filter);
         basketItem = menu.findItem(R.id.action_basket);
+        basketItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                BasketFragment basketFragment = new BasketFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame, basketFragment);
+                fragmentTransaction.addToBackStack(String.valueOf(R.id.nav_basket));
+                fragmentTransaction.commit();
+                return false;
+            }
+        });
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
 
