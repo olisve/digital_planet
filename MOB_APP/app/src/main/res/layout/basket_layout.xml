@@ -11,128 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="60dp">
-        <View
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/basket_items_view"
+            android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_basket_view"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card_view:cardElevation="5dp">
-        <LinearLayout
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
-            <ImageView
-                android:id="@+id/iv_basket_photo"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ic_photo_camera_black_24dp"/>
-            <LinearLayout
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:layout_width="180dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/iv_name_basket"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Samsung Mont X5"
-                    android:layout_marginTop="5dp"
-                    android:textColor="#000000"
-                    android:gravity="left"
-                    android:textSize="18dp" />
-                <TextView
-                    android:id="@+id/iv_price_basket"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:text="Цена: 600 бел. руб."
-                    android:gravity="left"
-                    android:textSize="16dp" />
-            </LinearLayout>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <ImageView
-                android:id="@+id/iv_delete_basket"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="30dp"
-                android:src="@drawable/ic_clear_black_24dp"
-                android:layout_gravity="right"/>
-        </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"/>
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_basket_view1"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card_view:cardElevation="5dp">
-            <LinearLayout
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="30dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-                <ImageView
-                    android:id="@+id/iv_basket_photo1"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_photo_camera_black_24dp"/>
-                <LinearLayout
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    android:layout_width="180dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/iv_name_basket1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Samsung Mont X5"
-                        android:layout_marginTop="5dp"
-                        android:textColor="#000000"
-                        android:gravity="left"
-                        android:textSize="18dp" />
-                    <TextView
-                        android:id="@+id/iv_price_basket1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:text="Цена: 600 бел. руб."
-                        android:gravity="left"
-                        android:textSize="16dp" />
-                </LinearLayout>
-                <ImageView
-                    android:id="@+id/iv_delete_basket1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="30dp"
-                    android:src="@drawable/ic_clear_black_24dp"
-                    android:layout_gravity="right"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+            android:layout_height="280dp"
+            android:clipToPadding="false" />
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_basket_order"
@@ -140,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             card_view:cardElevation="5dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginBottom="20dp">
@@ -165,14 +49,15 @@
                     android:layout_marginRight="10dp"
                     android:background="@android:color/darker_gray"/>
                 <TextView
+                    android:id="@+id/tv_total"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:text="600 бел. руб."
+                    android:text="0 бел. руб."
                     android:textColor="#000000"
                     android:gravity="center"
                     android:textSize="25dp"/>
                 <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btn_to_basket"
+                    android:id="@+id/btn_order_all"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:textSize="14dp"

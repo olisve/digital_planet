@@ -22,16 +22,16 @@ import android.widget.Toast;
 
 import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.APIConstants;
-import com.digitalplanet.digitalplanet.dal.Category;
-import com.digitalplanet.digitalplanet.dal.CategoryLoader;
 import com.digitalplanet.digitalplanet.dal.ConnectionException;
 import com.digitalplanet.digitalplanet.dal.Product;
 import com.digitalplanet.digitalplanet.dal.ProductLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by marija.savtchouk on 07.12.2017.
@@ -128,7 +128,7 @@ public class ProductFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
             product_name.setText(product.getName());
-            price_button.setText(String.valueOf(product.getPrice())+" бел. руб.");
+            price_button.setText(String.valueOf(product.getPrice()) + " бел. руб.");
             ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(product.getName());
             if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
                 String url = APIConstants.SERVICE_ROOT + APIConstants.IMAGE_REQUEST + "?" + APIConstants.URL_PARAM + product.getImagePath();
@@ -136,7 +136,7 @@ public class ProductFragment extends BaseFragment {
             } else {
                 product_photo.setBackgroundColor(getResources().getColor(R.color.colorAccentBack));
             }
-        }else{
+        } else {
             Toast.makeText(getContext(), "Network error", Toast.LENGTH_LONG).show();
         }
     }

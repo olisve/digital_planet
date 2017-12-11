@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_basket_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="5dp">
+        <LinearLayout
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="30dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+            <ImageView
+                android:id="@+id/iv_basket_photo"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_photo_camera_black_24dp"/>
+            <LinearLayout
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:layout_width="160dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_name_basket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Samsung Mont X5"
+                    android:layout_marginTop="5dp"
+                    android:textColor="#000000"
+                    android:gravity="left"
+                    android:textSize="18dp" />
+                <TextView
+                    android:id="@+id/tv_price_basket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="Цена: 600 бел. руб."
+                    android:gravity="left"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        <LinearLayout
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp">
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_plus_basket"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:textSize="20dp"
+                android:textColor="#FFFFFF"
+                android:background="@color/colorPrimaryBar"
+                android:text="+" />
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_count_basket"
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:textSize="15dp"
+                android:textColor="#FFFFFF"
+                android:background="@color/colorPrimaryBar"
+                android:text="0" />
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_minus_basket"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:textSize="20dp"
+                android:textColor="#FFFFFF"
+                android:background="@color/colorPrimaryBar"
+                android:text="-" />
+        </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_delete_basket"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_clear_black_24dp"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -34,12 +34,16 @@ import android.widget.Toast;
 import com.digitalplanet.digitalplanet.MainActivity;
 import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.APIConstants;
+import com.digitalplanet.digitalplanet.dal.BasketItem;
 import com.digitalplanet.digitalplanet.dal.ConnectionException;
+import com.digitalplanet.digitalplanet.dal.ItemDbLoader;
 import com.digitalplanet.digitalplanet.dal.Product;
 import com.digitalplanet.digitalplanet.dal.ProductLoader;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.squareup.picasso.Picasso;
 /**
@@ -52,6 +56,7 @@ public class CatalogListView   extends BaseFragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private List<Product> products = new ArrayList<>();
+    public Set<String> itemsInBasket = new HashSet<>();
     public String categoryName;
     public String categoryLongName;
     public String categoryId;
@@ -87,7 +92,7 @@ public class CatalogListView   extends BaseFragment {
         ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(categoryLongName);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        loadBasket();
         searchItems();
 
     }
@@ -125,6 +130,15 @@ public class CatalogListView   extends BaseFragment {
                 return false;
             }
         });
+    }
+
+    void loadBasket() {
+        LoadBasketTask ps = new LoadBasketTask(getContext());
+        ps.execute();
+    }
+
+    void showBasket(List<String> basket) {
+        itemsInBasket.addAll(basket);
     }
 
     public void searchItems() {
@@ -177,16 +191,34 @@ public class CatalogListView   extends BaseFragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             Product f = mDataset.get(position);
             holder.tvDescription.setText(f.getDescription());
             holder.tvTitle.setText(f.getName());
             holder.tvPrice.setText(String.valueOf(f.getPrice()) + " бел. руб.");
             final String id = products.get(position).get_id();
+
+            if (!itemsInBasket.contains(id)) {
+                holder.bBasket.setText(getString(R.string.to_basket));
+            } else {
+                holder.bBasket.setText(getString(R.string.from_basket));
+            }
+
             holder.bBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Товар в корзину id" + id, Toast.LENGTH_LONG).show();
+                    ItemDbLoader loader = new ItemDbLoader(CatalogListView.this.getContext());
+                    if (!itemsInBasket.contains(id)) {
+                        loader.setBasketItem(id, 1);
+                        itemsInBasket.add(id);
+                        holder.bBasket.setText(getString(R.string.from_basket));
+                        Toast.makeText(getContext(), "Товар добавлен в корзину!", Toast.LENGTH_LONG).show();
+                    } else {
+                        loader.removeBasketItem(id);
+                        itemsInBasket.remove(id);
+                        holder.bBasket.setText(getString(R.string.to_basket));
+                        Toast.makeText(getContext(), "Товар удалён из корзины!", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             holder.cardView.setOnClickListener(
@@ -199,7 +231,7 @@ public class CatalogListView   extends BaseFragment {
                             Bundle bundle = new Bundle();
                             bundle.putString("Product_ID", id); // ID
                             productFragment.setArguments(bundle);
-                            fragmentTransaction.replace(((View)CatalogListView.this.getView().getParent()).getId(), productFragment);
+                            fragmentTransaction.replace(((View) CatalogListView.this.getView().getParent()).getId(), productFragment);
                             fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
                         }
@@ -251,6 +283,41 @@ public class CatalogListView   extends BaseFragment {
                 products = loader.getProductsByCategory(category);
             } catch (ConnectionException e) {
                 return new ArrayList<>();
+            }
+            return products;
+        }
+    }
+
+    private class LoadBasketTask extends AsyncTask<String, Void, List<String>> {
+        private final Context context;
+        private ProgressDialog progress;
+
+        LoadBasketTask(Context c) {
+            this.context = c;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress = new ProgressDialog(this.context);
+            progress.setMessage("Загрузка товара...");
+            progress.show();
+        }
+
+        @Override
+        protected void onPostExecute(List<String> basket) {
+            super.onPostExecute(basket);
+            progress.dismiss();
+            showBasket(basket);
+        }
+
+        @Override
+        protected List<String> doInBackground(String... params) {
+            List<String> products = new ArrayList<String>();
+            ItemDbLoader loader = new ItemDbLoader(context);
+            List<BasketItem> basket = loader.getBasketItems();
+            for (BasketItem b : basket) {
+                products.add(b.get_id());
             }
             return products;
         }
