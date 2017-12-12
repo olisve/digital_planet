@@ -22,7 +22,9 @@ import android.widget.Toast;
 
 import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.APIConstants;
+import com.digitalplanet.digitalplanet.dal.BasketItem;
 import com.digitalplanet.digitalplanet.dal.ConnectionException;
+import com.digitalplanet.digitalplanet.dal.ItemDbLoader;
 import com.digitalplanet.digitalplanet.dal.Product;
 import com.digitalplanet.digitalplanet.dal.ProductLoader;
 import com.squareup.picasso.Picasso;
@@ -78,13 +80,33 @@ public class ProductFragment extends BaseFragment {
         price_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Товар в корзину id" + productId, Toast.LENGTH_LONG).show();
+                ItemDbLoader loader = new ItemDbLoader(ProductFragment.this.getContext());
+                BasketItem item = loader.getItemById(product.get_id());
+                if (item == null) {
+                    loader.setBasketItem(productId, 1);
+                    to_basket_button.setText(getString(R.string.from_basket));
+                    Toast.makeText(getContext(), "Товар добавлен в корзину!" + productId, Toast.LENGTH_LONG).show();
+                } else {
+                    loader.removeBasketItem(productId);
+                    to_basket_button.setText(getString(R.string.to_basket));
+                    Toast.makeText(getContext(), "Товар удалён из корзины!" + productId, Toast.LENGTH_LONG).show();
+                }
             }
         });
         to_basket_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Товар в корзину id" + productId, Toast.LENGTH_LONG).show();
+                ItemDbLoader loader = new ItemDbLoader(ProductFragment.this.getContext());
+                BasketItem item = loader.getItemById(product.get_id());
+                if (item == null) {
+                    loader.setBasketItem(productId, 1);
+                    to_basket_button.setText(getString(R.string.from_basket));
+                    Toast.makeText(getContext(), "Товар добавлен в корзину!", Toast.LENGTH_LONG).show();
+                } else {
+                    loader.removeBasketItem(productId);
+                    to_basket_button.setText(getString(R.string.to_basket));
+                    Toast.makeText(getContext(), "Товар удалён из корзины!", Toast.LENGTH_LONG).show();
+                }
             }
         });
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.description_view);
@@ -92,6 +114,13 @@ public class ProductFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ProductAdapter(description);
         mRecyclerView.setAdapter(mAdapter);
+        ItemDbLoader loader = new ItemDbLoader(ProductFragment.this.getContext());
+        BasketItem item = loader.getItemById(productId);
+        if (item==null) {
+            to_basket_button.setText(getString(R.string.to_basket));
+        } else {
+            to_basket_button.setText(getString(R.string.from_basket));
+        }
         loadProduct();
     }
 

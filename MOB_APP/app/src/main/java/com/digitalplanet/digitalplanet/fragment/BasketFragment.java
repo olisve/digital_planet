@@ -152,28 +152,64 @@ public class BasketFragment extends BaseFragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, final int position) {
-            Map.Entry<Product, BasketItem> f = mDataset.get(position);
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
+            final Map.Entry<Product, BasketItem> f = mDataset.get(position);
             holder.tvTitle.setText(f.getKey().getName());
-            holder.tvPrice.setText(getString(R.string.price) + String.valueOf(f.getKey().getPrice()) + " бел. руб.");
+            holder.tvPrice.setText(getString(R.string.price) + ": " + String.valueOf(f.getKey().getPrice()) + " бел. руб.");
             holder.countItem.setText(String.valueOf(f.getValue().getCount()));
             final String id = products.get(position).getKey().get_id();
+
             holder.plusItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Добавить" + id, Toast.LENGTH_LONG).show();
+                    ItemDbLoader loader = new ItemDbLoader(BasketFragment.this.getContext());
+                    BasketItem item = loader.getItemById(id);
+                    if(item.getCount()<10){
+                        f.getValue().setCount(item.getCount()+1);
+                        loader.setBasketItem(id, item.getCount()+1);
+                        holder.countItem.setText(String.valueOf(item.getCount()+1));
+                    }
+                    double total = 0;
+
+                    for (Map.Entry<Product, BasketItem> itemB : BasketFragment.this.products) {
+
+                        total += itemB.getKey().getPrice() * itemB.getValue().getCount();
+                    }
+                    tvTotal.setText(String.valueOf(total) + " бел. руб.");
                 }
             });
             holder.minusItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Убрать" + id, Toast.LENGTH_LONG).show();
+                    ItemDbLoader loader = new ItemDbLoader(BasketFragment.this.getContext());
+                    BasketItem item = loader.getItemById(id);
+                    if(item.getCount()>1) {
+                        loader.setBasketItem(id, item.getCount() - 1);
+                        holder.countItem.setText(String.valueOf(item.getCount()-1));
+                        f.getValue().setCount(item.getCount()-1);
+                    }
+                    double total = 0;
+                    for (Map.Entry<Product, BasketItem> itemB : BasketFragment.this.products) {
+
+                        total += itemB.getKey().getPrice() * itemB.getValue().getCount();
+                    }
+                    tvTotal.setText(String.valueOf(total) + " бел. руб.");
                 }
             });
             holder.deleteItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getContext(), "Удалить всё" + id, Toast.LENGTH_LONG).show();
+                    ItemDbLoader loader = new ItemDbLoader(BasketFragment.this.getContext());
+                    loader.removeBasketItem(id);
+                    BasketFragment.this.products.remove(position);
+                    BasketFragment.this.mAdapter.notifyDataSetChanged();
+                    double total = 0;
+                    for (Map.Entry<Product, BasketItem> item : BasketFragment.this.products) {
+
+                        total += item.getKey().getPrice() * item.getValue().getCount();
+                    }
+                    tvTotal.setText(String.valueOf(total) + " бел. руб.");
+
                 }
             });
             if (f.getKey().getImagePath() != null && !f.getKey().getImagePath().isEmpty()) {
