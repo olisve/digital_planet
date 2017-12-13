@@ -2,6 +2,7 @@ package com.digitalplanet.digitalplanet.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.digitalplanet.digitalplanet.LogInActivity;
+import com.digitalplanet.digitalplanet.MainActivity;
 import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.APIConstants;
 import com.digitalplanet.digitalplanet.dal.BasketItem;
@@ -27,6 +30,8 @@ import com.digitalplanet.digitalplanet.dal.ConnectionException;
 import com.digitalplanet.digitalplanet.dal.ItemDbLoader;
 import com.digitalplanet.digitalplanet.dal.Product;
 import com.digitalplanet.digitalplanet.dal.ProductLoader;
+import com.digitalplanet.digitalplanet.dal.User;
+import com.digitalplanet.digitalplanet.dal.UserDbLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.AbstractMap;
@@ -79,7 +84,20 @@ public class BasketFragment extends BaseFragment {
         bOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Заказ оформлен", Toast.LENGTH_LONG).show();
+                UserDbLoader loader = new UserDbLoader(getContext());
+                User user = loader.getUser();
+                if (user == null) {
+                    Intent intent = new Intent(BasketFragment.this.getActivity(), LogInActivity.class);
+                    startActivity(intent);
+                } else {
+                    ItemDbLoader itemLoader = new ItemDbLoader(BasketFragment.this.getContext());
+                    itemLoader.cleanBasket();
+                    products.clear();
+                    BasketFragment.this.mAdapter.notifyDataSetChanged();
+                    double total = 0;
+                    tvTotal.setText(String.valueOf(total) + " бел. руб.");
+                    Toast.makeText(getContext(), "Заказ оформлен!", Toast.LENGTH_LONG).show();
+                }
             }
         });
         loadProducts();
@@ -164,10 +182,10 @@ public class BasketFragment extends BaseFragment {
                 public void onClick(View v) {
                     ItemDbLoader loader = new ItemDbLoader(BasketFragment.this.getContext());
                     BasketItem item = loader.getItemById(id);
-                    if(item.getCount()<10){
-                        f.getValue().setCount(item.getCount()+1);
-                        loader.setBasketItem(id, item.getCount()+1);
-                        holder.countItem.setText(String.valueOf(item.getCount()+1));
+                    if (item.getCount() < 10) {
+                        f.getValue().setCount(item.getCount() + 1);
+                        loader.setBasketItem(id, item.getCount() + 1);
+                        holder.countItem.setText(String.valueOf(item.getCount() + 1));
                     }
                     double total = 0;
 
@@ -183,10 +201,10 @@ public class BasketFragment extends BaseFragment {
                 public void onClick(View v) {
                     ItemDbLoader loader = new ItemDbLoader(BasketFragment.this.getContext());
                     BasketItem item = loader.getItemById(id);
-                    if(item.getCount()>1) {
+                    if (item.getCount() > 1) {
                         loader.setBasketItem(id, item.getCount() - 1);
-                        holder.countItem.setText(String.valueOf(item.getCount()-1));
-                        f.getValue().setCount(item.getCount()-1);
+                        holder.countItem.setText(String.valueOf(item.getCount() - 1));
+                        f.getValue().setCount(item.getCount() - 1);
                     }
                     double total = 0;
                     for (Map.Entry<Product, BasketItem> itemB : BasketFragment.this.products) {

@@ -24,6 +24,9 @@ import android.widget.Toast;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.digitalplanet.digitalplanet.dal.User;
+import com.digitalplanet.digitalplanet.dal.UserDbLoader;
+import com.digitalplanet.digitalplanet.dal.UserLoader;
 import com.digitalplanet.digitalplanet.fragment.*;
 
 public class MainActivity extends AppCompatActivity
@@ -56,22 +59,44 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
         View headerview = navigationView.getHeaderView(0);
         ImageButton btn_header = (ImageButton) headerview.findViewById(R.id.btn_login_action);
+        final TextView txt_header = (TextView) headerview.findViewById(R.id.text_login_action);
+        UserDbLoader loader = new UserDbLoader(getApplicationContext());
+        User user = loader.getUser();
+        if (user == null) {
+            txt_header.setText(getString(R.string.log_in));
+        } else {
+            txt_header.setText(user.getFirstName() + " " + user.getLastName());
+        }
+
         btn_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LogInActivity.class);
-                startActivity(intent);
+                UserDbLoader loader = new UserDbLoader(getApplicationContext());
+                User user = loader.getUser();
+                if (user == null) {
+                    Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                    startActivity(intent);
+                } else {
+                    loader.removeUser();
+                    txt_header.setText(getString(R.string.log_in));
+                }
             }
         });
-        TextView txt_header = (TextView) headerview.findViewById(R.id.text_login_action);
+
         txt_header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LogInActivity.class);
-                startActivity(intent);
+                UserDbLoader loader = new UserDbLoader(getApplicationContext());
+                User user = loader.getUser();
+                if (user == null) {
+                    Intent intent = new Intent(MainActivity.this, LogInActivity.class);
+                    startActivity(intent);
+                } else {
+                    loader.removeUser();
+                    txt_header.setText(getString(R.string.log_in));
+                }
             }
         });
-        //Toast.makeText(MainActivity.this, "Created Catalog view", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -158,7 +183,9 @@ public class MainActivity extends AppCompatActivity
         int index = this.getFragmentManager().getBackStackEntryCount() - 1;
         android.support.v4.app.FragmentTransaction fragmentTransaction = null;
         if (id == R.id.nav_basket) {
-
+            BasketFragment basketFragment = new BasketFragment();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, basketFragment);
         } else if (id == R.id.nav_catalog) {
             CatalogFragment catalogFragment = new CatalogFragment();
             fragmentTransaction = getSupportFragmentManager().beginTransaction();

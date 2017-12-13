@@ -85,4 +85,11 @@ public class ItemDbLoader {
         db.execSQL(selectQuery, new String[]{basket_id});
         db.close();
     }
+
+    public void cleanBasket() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(dbName, null, null);
+        db.close();
+    }
+
 }

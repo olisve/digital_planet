@@ -138,7 +138,9 @@ public class CatalogListView   extends BaseFragment {
     }
 
     void showBasket(List<String> basket) {
+        itemsInBasket.clear();
         itemsInBasket.addAll(basket);
+        mAdapter.notifyDataSetChanged();
     }
 
     public void searchItems() {

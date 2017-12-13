@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Digital Planet</string>
+    <string name="logIn">Войти</string>
     <string name="filter">Фильтр</string>
     <string name="price">Цена</string>
     <string name="from">от (бел. руб.)</string>
