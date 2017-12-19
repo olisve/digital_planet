@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,17 +87,21 @@ public class BasketFragment extends BaseFragment {
             public void onClick(View v) {
                 UserDbLoader loader = new UserDbLoader(getContext());
                 User user = loader.getUser();
+                ItemDbLoader dbLoader = new ItemDbLoader(getContext());
+                List<BasketItem> basketItems = dbLoader.getBasketItems();
                 if (user == null) {
                     Intent intent = new Intent(BasketFragment.this.getActivity(), LogInActivity.class);
                     startActivity(intent);
-                } else {
-                    ItemDbLoader itemLoader = new ItemDbLoader(BasketFragment.this.getContext());
-                    itemLoader.cleanBasket();
-                    products.clear();
-                    BasketFragment.this.mAdapter.notifyDataSetChanged();
-                    double total = 0;
-                    tvTotal.setText(String.valueOf(total) + " бел. руб.");
-                    Toast.makeText(getContext(), "Заказ оформлен!", Toast.LENGTH_LONG).show();
+                } else if (basketItems.size()!=0){
+                    ConfirmContactFragment confirmFragment = new ConfirmContactFragment();
+                    FragmentTransaction fragmentTransaction = BasketFragment.this.getFragmentManager().beginTransaction();
+                    Bundle bundle = new Bundle();
+                    confirmFragment.setArguments(bundle);
+                    fragmentTransaction.replace(((View) BasketFragment.this.getView().getParent()).getId(), confirmFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }else {
+                    Toast.makeText(getContext(), "Корзина пуста.", Toast.LENGTH_LONG).show();
                 }
             }
         });

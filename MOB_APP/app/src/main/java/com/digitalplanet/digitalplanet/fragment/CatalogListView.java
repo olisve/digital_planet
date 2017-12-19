@@ -102,7 +102,7 @@ public class CatalogListView   extends BaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.action_search).setVisible(true);
         menu.findItem(R.id.action_filter).setVisible(true);
-
+        menu.findItem(R.id.action_basket).setVisible(true);
         menu.findItem(R.id.action_filter).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

@@ -10,6 +10,12 @@
     <string name="to_basket">В корзину!</string>
     <string name="from_basket">Удалить из корзины</string>
     <string name="basket">Корзина</string>
+    <string name="contact">Контактные данные</string>
+    <string name="order_address">Адрес доставки</string>
+    <string name="contact_phone">Контактный телефон</string>
+    <string name="contact_email">Email</string>
+    <string name="contact_name">Имя</string>
+    <string name="contact_confirm">Подтвердить</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

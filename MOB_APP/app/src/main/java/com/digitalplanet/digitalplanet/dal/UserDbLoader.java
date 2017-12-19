@@ -46,10 +46,10 @@ public class UserDbLoader {
                 User user = new User();
                 user.set_id(c.getString(idColIndex));
                 user.setFirstName(c.getString(nameColIndex));
-                user.setLastName(c.getColumnName(lastNameColIndex));
-                user.setEmail(c.getColumnName(emailColIndex));
-                user.setPhone(c.getColumnName(phoneColIndex));
-                user.setAddress(c.getColumnName(addressColIndex));
+                user.setLastName(c.getString(lastNameColIndex));
+                user.setEmail(c.getString(emailColIndex));
+                user.setPhone(c.getString(phoneColIndex));
+                user.setAddress(c.getString(addressColIndex));
                 outItems.add(user);
             } while (c.moveToNext());
         }

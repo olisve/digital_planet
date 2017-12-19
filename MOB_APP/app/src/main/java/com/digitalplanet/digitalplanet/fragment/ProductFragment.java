@@ -85,11 +85,11 @@ public class ProductFragment extends BaseFragment {
                 if (item == null) {
                     loader.setBasketItem(productId, 1);
                     to_basket_button.setText(getString(R.string.from_basket));
-                    Toast.makeText(getContext(), "Товар добавлен в корзину!" + productId, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Товар добавлен в корзину!", Toast.LENGTH_LONG).show();
                 } else {
                     loader.removeBasketItem(productId);
                     to_basket_button.setText(getString(R.string.to_basket));
-                    Toast.makeText(getContext(), "Товар удалён из корзины!" + productId, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Товар удалён из корзины!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -116,7 +116,7 @@ public class ProductFragment extends BaseFragment {
         mRecyclerView.setAdapter(mAdapter);
         ItemDbLoader loader = new ItemDbLoader(ProductFragment.this.getContext());
         BasketItem item = loader.getItemById(productId);
-        if (item==null) {
+        if (item == null) {
             to_basket_button.setText(getString(R.string.to_basket));
         } else {
             to_basket_button.setText(getString(R.string.from_basket));
