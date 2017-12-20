@@ -52,7 +52,7 @@ public class ConfirmContactFragment extends BaseFragment {
         return inflater.inflate(R.layout.confirm_form, container, false);
     }
 
-    public boolean validate(){
+    public boolean validate() {
         boolean valid = true;
 
         String name = nameText.getText().toString();
@@ -115,7 +115,7 @@ public class ConfirmContactFragment extends BaseFragment {
         bConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()) {
+                if (validate()) {
                     String name = nameText.getText().toString();
                     String email = emailText.getText().toString();
                     String phone = phoneText.getText().toString();

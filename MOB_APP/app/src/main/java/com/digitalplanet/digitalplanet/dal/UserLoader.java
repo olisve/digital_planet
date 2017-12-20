@@ -32,16 +32,16 @@ public class UserLoader  extends BaseLoader {
     }
 
     public User signUpUser(User user) throws ConnectionException {
-        String url = APIConstants.SERVICE_ROOT+APIConstants.SIGNUP_REQUEST;
+        String url = APIConstants.SERVICE_ROOT + APIConstants.SIGNUP_REQUEST;
         try {
             if (hasConnection()) {
                 Gson json = new Gson();
                 URL url_obj = new URL(url);
-                HttpURLConnection conn= (HttpURLConnection) url_obj.openConnection();
+                HttpURLConnection conn = (HttpURLConnection) url_obj.openConnection();
                 conn.setDoOutput(true);
-                conn.setInstanceFollowRedirects( false );
-                conn.setRequestMethod( "POST" );
-                conn.setUseCaches( false );
+                conn.setInstanceFollowRedirects(false);
+                conn.setRequestMethod("POST");
+                conn.setUseCaches(false);
 
                 String userString = APIConstants.EMAIL_PARAM + user.getEmail() +
                         "&" + APIConstants.PASSWORD_PARAM + user.getPassword() +
@@ -50,13 +50,13 @@ public class UserLoader  extends BaseLoader {
                         "&" + APIConstants.ADDRESS_PARAM + user.getAddress() +
                         "&" + APIConstants.PHONE_PARAM + user.getPhone();
                 userString.replaceAll(" ", "%20");
-                byte[] postData       = userString.getBytes(Charset.forName("UTF-8"));
-                int    postDataLength = postData.length;
-                conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestProperty( "charset", "utf-8");
-                conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-                DataOutputStream wr = new DataOutputStream( conn.getOutputStream());
-                wr.write( postData );
+                byte[] postData = userString.getBytes(Charset.forName("UTF-8"));
+                int postDataLength = postData.length;
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("charset", "utf-8");
+                conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.write(postData);
 
                 wr.flush();
                 wr.close();
@@ -76,27 +76,27 @@ public class UserLoader  extends BaseLoader {
     }
 
     public User logInUser(User user) throws ConnectionException {
-        String url = APIConstants.SERVICE_ROOT+APIConstants.LOGIN_REQUEST; //?
+        String url = APIConstants.SERVICE_ROOT + APIConstants.LOGIN_REQUEST;
         try {
             if (hasConnection()) {
                 Gson json = new Gson();
                 URL url_obj = new URL(url);
-                HttpURLConnection conn= (HttpURLConnection) url_obj.openConnection();
+                HttpURLConnection conn = (HttpURLConnection) url_obj.openConnection();
                 conn.setDoOutput(true);
-                conn.setInstanceFollowRedirects( false );
-                conn.setRequestMethod( "POST" );
-                conn.setUseCaches( false );
+                conn.setInstanceFollowRedirects(false);
+                conn.setRequestMethod("POST");
+                conn.setUseCaches(false);
 
                 String userString = APIConstants.EMAIL_PARAM + user.getEmail() +
                         "&" + APIConstants.PASSWORD_PARAM + user.getPassword();
                 userString.replaceAll(" ", "%20");
-                byte[] postData       = userString.getBytes(Charset.forName("UTF-8"));
-                int    postDataLength = postData.length;
-                conn.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestProperty( "charset", "utf-8");
-                conn.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
-                DataOutputStream wr = new DataOutputStream( conn.getOutputStream());
-                wr.write( postData );
+                byte[] postData = userString.getBytes(Charset.forName("UTF-8"));
+                int postDataLength = postData.length;
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("charset", "utf-8");
+                conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.write(postData);
 
                 wr.flush();
                 wr.close();

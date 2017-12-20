@@ -16,9 +16,44 @@
     <string name="contact_email">Email</string>
     <string name="contact_name">Имя</string>
     <string name="contact_confirm">Подтвердить</string>
+    <string name="delivery">Доставка</string>
+    <string name="fee">Оплата</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="delivery_adderss">
+        Забрать свой заказ вы можете в любое время по адресу: <b>просп. Независимости 4, каб. 610</b>.
+    </string>
+    <string name="delivery_small">
+        Доставка малогабаритных товаров  - <b>бесплатно</b>.
+    </string>
+    <string name="delivery_big">
+        Доставка крупногабаритных товаров - <b>5 бел. руб</b>.
+    </string>
+    <string name="fee_online">
+        К оплате принимаются карты <b>Visa</b>, <b>Visa Electron</b>, <b>MasterCard</b> всех классов и банков, <b>Maestro</b> с CVC-кодом и <b>Белкарт</b>.
+        После подтверждения заказа вы будете перенаправлены на сервер системы <b>Webpay</b>, обеспечивающей безопасность платежей.
+    </string>
+    <string name="phone_numbers">
+        +375 29 850-10-72\n
+        +375 29 394-77-28\n
+        +375 29 266-11-77\n
+    </string>
+    <string name="web_numbers">
+
+        Viber: digitalplanet.by\n
+        Telegram: @digitalplanet.bot\n
+        E-mail: digplan.contact@digplan.by\n
+    </string>
+    <string name="selfdelivery">
+        <i>Чтобы воспользоваться самовывозом, необходимо сначала дождаться подтверждения заказа.</i>\n
+        Время работы ПВЗ в обычном режиме:\n
+        пн-пт — с 10:00 до 21:00,\n
+        сб — с 10:00 до 19:00,\n
+        вс — с 10:00 до 17:00.\n
+        Адрес: <b>просп. Независимости 4, каб. 610</b>
+    </string>
+    <string name="discount">Скидки и акции</string>
     <string name="action_settings">Settings</string>
     <string name="log_in">Войти</string>
 </resources>

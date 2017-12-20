@@ -15,8 +15,7 @@ public class OrderLoader extends BaseLoader {
         super(context);
     }
 
-    public void sendOrder(User user, List<BasketItem> product)
-    {
+    public void sendOrder(User user, List<BasketItem> product) {
 
     }
 }

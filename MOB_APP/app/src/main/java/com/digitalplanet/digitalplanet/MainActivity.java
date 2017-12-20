@@ -192,11 +192,18 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.frame, catalogFragment);
 
         } else if (id == R.id.nav_delivery) {
+            DeliveryFragment deliveryFragment = new DeliveryFragment();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, deliveryFragment);
 
         } else if (id == R.id.nav_discount) {
-
+            DiscountFragment discountFragment = new DiscountFragment();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, discountFragment);
         } else if (id == R.id.nav_contacts) {
-
+            ContactFragment contactFragment = new ContactFragment();
+            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, contactFragment);
         }
         if (fragmentTransaction != null) {
             if (index >= 0) {
