@@ -97,3 +97,22 @@ footer p {
     margin-bottom: 0;
     text-align: center;
 }
+
+
+html,
+body {
+    height: 100%;
+}
+#wrap {
+    min-height: 100%;
+}
+main {
+    padding-bottom: 80px;
+    /*Высота футера*/
+}
+footer {
+    margin-top: -80px;
+    /*Минус Высота футера*/
+    height: 80px;
+    /*Высота футера*/
+}
