@@ -3,12 +3,12 @@
         <div class="col-sm-3" ng-repeat="product in $ctrl.products">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <a href="#/products/{{product._id}}">
+                    <a href="#!/products/{{product._id}}">
                         {{product.name}}
                     </a>
                 </div>
                 <div class="panel-body">
-                    <a href="#/products/{{product._id}}">
+                    <a href="#!/products/{{product._id}}">
                         <img ng-src="{{product.imageUrl}}" class="img-responsive" style="width:100%" alt="{{product.name}}" />
                     </a>
                     <p class="mainpageprice">{{product.price}} руб.</p>
