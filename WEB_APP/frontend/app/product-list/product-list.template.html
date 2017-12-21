@@ -10,7 +10,7 @@
                 </div>
                 <div class="panel-body">
                     <a href="#!/products/{{product._id}}">
-                        <img ng-src="{{product.imageUrl}}" class="img-responsive" style="width:100%" alt="{{product.name}}" />
+                        <img ng-src="https://digital-app.herokuapp.com/image?url={{product.imagePath}}" class="img-responsive" style="height:200px" alt="{{product.name}}" />
                     </a>
                     <p class="mainpageprice">{{product.price}} руб.</p>
                 </div>

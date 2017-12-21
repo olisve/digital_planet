@@ -2,8 +2,8 @@
 
 angular.module('digitalPlanet', [
     'ngRoute',
-    'productList',
     'productDetail',
+    'productList',
     'productFilter',
     'companyInfo'
 ]);
