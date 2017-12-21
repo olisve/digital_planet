@@ -1,5 +1,3 @@
 'use strict';
 
-angular.module('productDetail', [
-    'ngRoute'
-]);
+angular.module('productDetail', []);

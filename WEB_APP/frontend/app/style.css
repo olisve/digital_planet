@@ -116,3 +116,16 @@ footer {
     height: 80px;
     /*Высота футера*/
 }
+
+.iteminfobody{
+    min-height: 400px;
+}
+
+.panel-body p1{
+    font-size: 20px;
+}
+
+.panel-body button{
+    height: 50%;
+    width: 60%;
+}
