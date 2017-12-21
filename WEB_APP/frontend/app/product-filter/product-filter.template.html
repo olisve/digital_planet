@@ -1,7 +1,49 @@
-<br><h3 class="text-center">Название категории Mobile</h3><br>
+<br><h3 class="category-name">Категория {{$ctrl.filters[0].category.name}}</h3><br>
 
 <div class="container">
     <div class="row text-center">
+        <div class="col-sm-4" >
+            <div class="panel panel-info panel-filter">
+                <div class="panel-heading">
+                    <p>Фильтр</p>
+                </div>
+                <div class="panel-body">
+
+                    <p><b>Цена</b></p>
+                    <div class="col-xs-8">
+                        <label for="price_from">от</label>
+                        <input type="text" class="form-control" id="price_from" name="price_from" ng-model="filter">
+                    </div>
+                    <div class="col-xs-8">
+                        <label for="price_to">до</label>
+                        <input type="text" class="form-control" id="price_to" name="price_to" ng-model="filterз">
+                        <p>бел. руб</p>
+                    </div>
+
+                    <div>
+                        <p><b>Производитель</b></p>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio">LG</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio">Samsung</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio">Xeomi</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="optradio">Huawei</label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="panel-footer text-center">
+                    <button type="button" class="btn btn-info">Фильтровать</button>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-2" ng-repeat="filter in $ctrl.filters">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -9,9 +51,9 @@
                         {{filter.name}}
                     </a>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" align="center">
                     <a href="#!/products/{{filter._id}}">
-                        <img ng-src="{{filter.imageUrl}}" class="img-responsive" style="width:100%" alt="{{filter.name}}" />
+                        <img ng-src="https://digital-app.herokuapp.com/image?url={{filter.imagePath}}" class="img-responsive" style="height:150px" alt="{{filter.name}}" />
                     </a>
                     <p class="mainpageprice">{{filter.price}} руб.</p>
                 </div>
