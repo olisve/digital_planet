@@ -165,7 +165,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Toast.makeText(this, "Поиск по: " + query, Toast.LENGTH_SHORT).show();
+        SearchFragment searchFragment = new SearchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("Search_Word", query); // Name
+        searchFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frame, searchFragment);
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
+        //Toast.makeText(this, "Поиск по: " + query, Toast.LENGTH_SHORT).show();
         return false;
     }
 

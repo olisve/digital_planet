@@ -16,6 +16,7 @@ public class BaseLoader {
         this.context = context;
     }
 
+
     protected boolean hasConnection() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -33,3 +34,4 @@ public class BaseLoader {
         return false;
     }
 }
+

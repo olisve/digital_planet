@@ -2,36 +2,28 @@ package com.digitalplanet.digitalplanet.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.digitalplanet.digitalplanet.MainActivity;
 import com.digitalplanet.digitalplanet.R;
 import com.digitalplanet.digitalplanet.dal.APIConstants;
 import com.digitalplanet.digitalplanet.dal.BasketItem;
@@ -39,32 +31,29 @@ import com.digitalplanet.digitalplanet.dal.ConnectionException;
 import com.digitalplanet.digitalplanet.dal.ItemDbLoader;
 import com.digitalplanet.digitalplanet.dal.Product;
 import com.digitalplanet.digitalplanet.dal.ProductLoader;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.squareup.picasso.Picasso;
 /**
- * Created by marija.savtchouk on 29.11.2017.
+ * Created by marija.savtchouk on 21.12.2017.
  */
 
-public class CatalogListView extends BaseFragment {
+public class SearchFragment extends BaseFragment implements SearchView.OnQueryTextListener {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private MenuItem searchItem;
 
     private List<Product> products = new ArrayList<>();
     public Set<String> itemsInBasket = new HashSet<>();
-    public String categoryName;
-    public String categoryLongName;
-    public String categoryId;
-    public String priceFrom;
-    public String priceTo;
-    public String brands;
 
-    public CatalogListView() {
+    private String word;
+
+    public SearchFragment() {
     }
 
     @Override
@@ -76,12 +65,7 @@ public class CatalogListView extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        categoryName = getArguments().getString("Category_Name");
-        categoryId = getArguments().getString("Category_ID");
-        categoryLongName = getArguments().getString("Category_Long_Name");
-        brands = getArguments().getString("Brands");
-        priceFrom = getArguments().getString("Price_From");
-        priceTo = getArguments().getString("Price_To");
+        word = getArguments().getString("Search_Word");
         return inflater.inflate(R.layout.catalog_list_main, container, false);
     }
 
@@ -93,57 +77,52 @@ public class CatalogListView extends BaseFragment {
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.catalog_view);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ProductAdapter(products);
+        mAdapter = new SearchFragment.ProductAdapter(products);
         mRecyclerView.setAdapter(mAdapter);
-        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(categoryLongName);
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        loadBasket();
-        searchItems();
-
+        ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(getString(R.string.app_name));
+        //loadBasket();
+        //searchItems();
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.findItem(R.id.action_search).setVisible(true);
-        menu.findItem(R.id.action_filter).setVisible(true);
+        menu.findItem(R.id.action_filter).setVisible(false);
         menu.findItem(R.id.action_basket).setVisible(true);
-        menu.findItem(R.id.action_filter).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                FilterFragment filterFragment = new FilterFragment();
-
-                FragmentTransaction fragmentTransaction = CatalogListView.this.getFragmentManager().beginTransaction();
-                Bundle bundle = new Bundle();
-                bundle.putString("Category_Name", CatalogListView.this.categoryName); // Name
-                bundle.putString("Category_Long_Name", CatalogListView.this.categoryLongName); // Name
-                bundle.putString("Category_ID", CatalogListView.this.categoryId); // ID
-                bundle.putString("Brands", CatalogListView.this.brands); // Brands
-                bundle.putString("Price_From", CatalogListView.this.priceFrom); // PriceFrom
-                bundle.putString("Price_To", CatalogListView.this.priceTo); // PriceTo
-                filterFragment.setArguments(bundle);
-                fragmentTransaction.replace(((View) CatalogListView.this.getView().getParent()).getId(), filterFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-                return false;
-            }
-        });
         menu.findItem(R.id.action_basket).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 BasketFragment basketFragment = new BasketFragment();
-                FragmentTransaction fragmentTransaction = CatalogListView.this.getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(((View) CatalogListView.this.getView().getParent()).getId(), basketFragment);
+                FragmentTransaction fragmentTransaction = SearchFragment.this.getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(((View) SearchFragment.this.getView().getParent()).getId(), basketFragment);
                 fragmentTransaction.addToBackStack(String.valueOf(R.id.nav_basket));
                 fragmentTransaction.commit();
                 return false;
             }
         });
+        searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        searchView.setOnQueryTextListener(this);
+        searchView.setQuery(word, true);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        this.word = query;
+        loadBasket();
+        searchItems();
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // User changed the text
+        return false;
     }
 
     void loadBasket() {
-        LoadBasketTask ps = new LoadBasketTask(getContext());
+        SearchFragment.LoadBasketTask ps = new SearchFragment.LoadBasketTask(getContext());
         ps.execute();
     }
 
@@ -154,17 +133,15 @@ public class CatalogListView extends BaseFragment {
     }
 
     public void searchItems() {
-        if (brands == null && priceFrom == null && priceTo == null) {
-            LoadTask ps = new LoadTask(getContext());
-            ps.execute(categoryName);
-        } else {
-            LoadTask ps = new LoadTask(getContext());
-            ps.execute(categoryName, brands, priceFrom, priceTo);
-        }
+        LoadTask ps = new LoadTask(getContext());
+        ps.execute(word);
     }
 
     public void showItems(List<Product> _products, Context context) {
         products.clear();
+        searchItem.expandActionView();
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setQuery(word, false);
         if (_products.size() > 0) {
             products.addAll(_products);
             mAdapter.notifyDataSetChanged();
@@ -173,7 +150,7 @@ public class CatalogListView extends BaseFragment {
         Toast.makeText(context, "Товары не найдены.", Toast.LENGTH_LONG).show();
     }
 
-    public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
+    public class ProductAdapter extends RecyclerView.Adapter<SearchFragment.ProductAdapter.ViewHolder> {
         private List<Product> mDataset;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
@@ -199,16 +176,16 @@ public class CatalogListView extends BaseFragment {
         }
 
         @Override
-        public ProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                            int viewType) {
+        public SearchFragment.ProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                                           int viewType) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_layout, parent, false);
-            ViewHolder vh = new ViewHolder(v);
+            SearchFragment.ProductAdapter.ViewHolder vh = new SearchFragment.ProductAdapter.ViewHolder(v);
             return vh;
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, final int position) {
+        public void onBindViewHolder(final SearchFragment.ProductAdapter.ViewHolder holder, final int position) {
             Product f = mDataset.get(position);
             holder.tvDescription.setText(f.getDescription());
             holder.tvTitle.setText(f.getName());
@@ -224,7 +201,7 @@ public class CatalogListView extends BaseFragment {
             holder.bBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ItemDbLoader loader = new ItemDbLoader(CatalogListView.this.getContext());
+                    ItemDbLoader loader = new ItemDbLoader(SearchFragment.this.getContext());
                     if (!itemsInBasket.contains(id)) {
                         loader.setBasketItem(id, 1);
                         itemsInBasket.add(id);
@@ -244,11 +221,11 @@ public class CatalogListView extends BaseFragment {
                         public void onClick(View v) {
                             ProductFragment productFragment = new ProductFragment();
 
-                            FragmentTransaction fragmentTransaction = CatalogListView.this.getFragmentManager().beginTransaction();
+                            FragmentTransaction fragmentTransaction = SearchFragment.this.getFragmentManager().beginTransaction();
                             Bundle bundle = new Bundle();
                             bundle.putString("Product_ID", id); // ID
                             productFragment.setArguments(bundle);
-                            fragmentTransaction.replace(((View) CatalogListView.this.getView().getParent()).getId(), productFragment);
+                            fragmentTransaction.replace(((View) SearchFragment.this.getView().getParent()).getId(), productFragment);
                             fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
                         }
@@ -295,37 +272,13 @@ public class CatalogListView extends BaseFragment {
         protected List<Product> doInBackground(String... params) {
             ArrayList<Product> products = new ArrayList<Product>();
             ProductLoader loader = new ProductLoader(context);
-            if (params.length == 1) {
-                String category = params[0];
-                try {
-                    products = loader.getProductsByCategory(category);
-                } catch (ConnectionException e) {
-                    return new ArrayList<>();
-                }
-            } else {
-                String category = params[0];
-                String brand = params[1];
-                String priceFrom = params[2];
-                String priceTo = params[3];
-
-                if (priceFrom == null) {
-                    priceFrom = "";
-                }
-
-                if (priceTo == null) {
-                    priceTo = "";
-                }
-
-                if (brand == null) {
-                    brand = "";
-                }
-
-                try {
-                    products = loader.getProductsByFilter(category, brand, priceFrom, priceTo);
-                } catch (ConnectionException e) {
-                    return new ArrayList<>();
-                }
+            String word = params[0];
+            try {
+                products = loader.getProductsBySearch(word);
+            } catch (ConnectionException e) {
+                return new ArrayList<>();
             }
+
             return products;
         }
     }
@@ -365,3 +318,4 @@ public class CatalogListView extends BaseFragment {
         }
     }
 }
+

@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digitalplanet.digitalplanet.R;
+import com.digitalplanet.digitalplanet.dal.BrandsLoader;
+import com.digitalplanet.digitalplanet.dal.ConnectionException;
 import com.digitalplanet.digitalplanet.dal.Product;
 
 import java.util.ArrayList;
@@ -45,7 +47,11 @@ public class FilterFragment extends BaseFragment {
     private List<String> producers = new ArrayList<>();
     public Set<String> selectedItems = new HashSet<>();
     public String categoryName;
+    public String categoryLongName;
     public String categoryId;
+    public String priceFrom;
+    public String priceTo;
+    public String brands;
 
     public FilterFragment() {
         // Required empty public constructor
@@ -62,6 +68,13 @@ public class FilterFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         categoryName = getArguments().getString("Category_Name");
         categoryId = getArguments().getString("Category_ID");
+        categoryLongName = getArguments().getString("Category_Long_Name");
+        brands = getArguments().getString("Brands");
+        if (brands != null) {
+            selectedItems.add(brands);
+        }
+        priceFrom = getArguments().getString("Price_From");
+        priceTo = getArguments().getString("Price_To");
         return inflater.inflate(R.layout.filter_view, container, false);
     }
 
@@ -77,6 +90,8 @@ public class FilterFragment extends BaseFragment {
         ((AppCompatActivity) this.getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.filter));
         final EditText fromText = view.findViewById(R.id.input_price_from);
         final EditText toText = view.findViewById(R.id.input_price_to);
+        fromText.setText(priceFrom != null ? priceFrom : "");
+        toText.setText(priceTo != null ? priceTo : "");
         ((Button) view.findViewById(R.id.btn_apply)).setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -84,20 +99,20 @@ public class FilterFragment extends BaseFragment {
                 int size = selectedItems.size();
                 String from = fromText.getText().toString();
                 String to = toText.getText().toString();
-                Toast.makeText(getContext(), "Number of items selected=" + size + "from=" + from + "to=" + to, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), "Number of items selected=" + size + "from=" + from + "to=" + to, Toast.LENGTH_LONG).show();
                 CatalogListView catalogListFragment = new CatalogListView();
                 FragmentTransaction fragmentTransaction = FilterFragment.this.getFragmentManager().beginTransaction();
                 Bundle bundle = new Bundle();
                 bundle.putString("Category_Name", categoryName); // Name
                 bundle.putString("Category_ID", categoryId); // ID
-                bundle.putStringArrayList("Producers", new ArrayList<String>(selectedItems));
+                ArrayList<String> all_items = new ArrayList<>(selectedItems);
+                bundle.putString("Brands", all_items.size() > 0 ? all_items.get(0) : null);
                 bundle.putString("Price_From", from);
                 bundle.putString("Price_To", to);
                 catalogListFragment.setArguments(bundle);
                 fragmentTransaction.replace(((View) FilterFragment.this.getView().getParent()).getId(), catalogListFragment);
                 getFragmentManager().popBackStack();
                 fragmentTransaction.commit();
-
             }
         });
         // ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -115,7 +130,7 @@ public class FilterFragment extends BaseFragment {
 
     public void searchProducers() {
         FilterFragment.LoadTask ps = new FilterFragment.LoadTask(getContext());
-        ps.execute("Category");
+        ps.execute(categoryName);
     }
 
     public void showProducers(List<String> _producers) {
@@ -158,15 +173,16 @@ public class FilterFragment extends BaseFragment {
             final String f = mDataset.get(position);
 
             holder.tvTitle.setText(f);
+            holder.tvTitle.setChecked(selectedItems.contains(f));
             holder.tvTitle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //holder.tvTitle.setChecked(!holder.tvTitle.isChecked());
+                    selectedItems.clear();
                     if (holder.tvTitle.isChecked()) {
                         FilterFragment.this.selectedItems.add(f);
-                    } else {
-                        FilterFragment.this.selectedItems.remove(f);
                     }
+                    mAdapter.notifyDataSetChanged();
                 }
             });
         }
@@ -203,16 +219,14 @@ public class FilterFragment extends BaseFragment {
         @Override
         protected List<String> doInBackground(String... params) {
             ArrayList<String> producers = new ArrayList<String>();
-            producers.add("Samsung");
-            producers.add("Bosh");
-            producers.add("Nokia");
-            producers.add("LG");
-            producers.add("Apple");
+            BrandsLoader brandsLoader = new BrandsLoader(context);
             try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
+                producers = brandsLoader.getBrandsByCategory(params[0]);
+            } catch (ConnectionException e) {
+                return new ArrayList<String>();
             }
             return producers;
         }
     }
 }
+
