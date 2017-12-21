@@ -129,3 +129,11 @@ footer {
     height: 50%;
     width: 60%;
 }
+
+.itemprice{
+    font-size: 35px;
+    color: #169BD5;
+    margin-top: 30px;
+    margin-bottom: 0;
+    text-align: center;
+}
