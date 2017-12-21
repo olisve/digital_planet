@@ -3,5 +3,7 @@
 angular.module('digitalPlanet', [
     'ngRoute',
     'productList',
-    'productDetail'
+    'productDetail',
+    'productFilter',
+    'companyInfo'
 ]);

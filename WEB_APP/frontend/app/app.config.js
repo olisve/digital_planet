@@ -13,6 +13,12 @@ config(['$locationProvider', '$routeProvider',
         when('/products/:productId', {
             template: '<product-detail></product-detail>'
         }).
+        when('/filters/:filterCategory', {
+            template: '<product-filter></product-filter>'
+        }).
+        when('/info/:infoCategory', {
+            template: '<company-info></company-info>'
+        }).
         otherwise('/products');
     }
 ]);

@@ -137,3 +137,12 @@ footer {
     margin-bottom: 0;
     text-align: center;
 }
+
+.panel-item{
+    /*background-color: #f9f9f9;*/
+}
+
+.navcategories{
+    min-width: 20%;
+    margin-left: 70px;
+}
