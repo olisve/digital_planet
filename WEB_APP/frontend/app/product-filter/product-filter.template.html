@@ -1,1 +1,24 @@
-<br><h3 class="text-center">Название категории</h3><br>
+<br><h3 class="text-center">Название категории Mobile</h3><br>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm-2" ng-repeat="filter in $ctrl.filters">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <a href="#!/products/{{filter._id}}">
+                        {{filter.name}}
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <a href="#!/products/{{filter._id}}">
+                        <img ng-src="{{filter.imageUrl}}" class="img-responsive" style="width:100%" alt="{{filter.name}}" />
+                    </a>
+                    <p class="mainpageprice">{{filter.price}} руб.</p>
+                </div>
+                <div class="panel-footer text-center">
+                    <button type="button" class="btn btn-info">В корзину!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
