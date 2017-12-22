@@ -151,7 +151,7 @@ footer {
     height: 350px;
     text-align: left;
     padding-left: 20%;
-
+    horiz-align: center;
 }
 .panel-filter .panel-heading{
     background-color: #1976D2;
@@ -172,4 +172,10 @@ footer {
 .category-name{
     text-align: left;
     padding-left: 12%;
+}
+
+.reset_img{
+    height: 17px;
+    width: 17px;
+    vertical-align: middle;
 }

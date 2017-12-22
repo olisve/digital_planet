@@ -1,4 +1,4 @@
-<br><h3 class="category-name">Категория {{$ctrl.filters[0].category.name}}</h3><br>
+<br><h3 class="category-name">Категория {{$ctrl.filterproducts[0].category.name}}</h3><br>
 
 <div class="container">
     <div class="row text-center">
@@ -12,39 +12,38 @@
                     <p><b>Цена</b></p>
                     <div class="col-xs-8">
                         <label for="price_from">от</label>
-                        <input type="text" class="form-control" id="price_from" name="price_from" ng-model="filter">
+                        <input type="text" class="form-control" id="price_from" placeholder="от" ng-model="formInfo.priceFrom" pattern="\d*">
                     </div>
                     <div class="col-xs-8">
                         <label for="price_to">до</label>
-                        <input type="text" class="form-control" id="price_to" name="price_to" ng-model="filterз">
+                        <input type="text" class="form-control" id="price_to" placeholder="до" ng-model="formInfo.priceTo" pattern="\d*">
                         <p>бел. руб</p>
                     </div>
 
                     <div>
                         <p><b>Производитель</b></p>
                         <div class="radio">
-                            <label><input type="radio" name="optradio">LG</label>
+                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Lg">LG</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" name="optradio">Samsung</label>
+                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Samsung">Samsung</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" name="optradio">Xeomi</label>
+                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Xiaomi">Xiaomi</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" name="optradio">Huawei</label>
+                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Huawei">Huawei</label>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="panel-footer text-center">
-                    <button type="button" class="btn btn-info">Фильтровать</button>
+                    <button ng-click="$ctrl.filterData(formInfo)" type="submit" class="btn btn-info">Фильтровать</button>
+                    <button ng-click="$ctrl.resetData()" type="submit" class="btn btn-info"><img src="img/refresh.png" alt="reset" class="reset_img"></button>
                 </div>
             </div>
         </div>
 
-        <div class="col-sm-2" ng-repeat="filter in $ctrl.filters">
+        <div class="col-sm-2" ng-repeat="filter in $ctrl.filterproducts">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <a href="#!/products/{{filter._id}}">
@@ -62,5 +61,7 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
