@@ -1,3 +1,5 @@
 'use strict';
 
-angular.module('companyInfo', []);
+angular.module('companyInfo', [
+    'ngRoute'
+]);
