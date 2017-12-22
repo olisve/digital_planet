@@ -147,6 +147,7 @@ public class SearchFragment extends BaseFragment implements SearchView.OnQueryTe
             mAdapter.notifyDataSetChanged();
             return;
         }
+        mAdapter.notifyDataSetChanged();
         Toast.makeText(context, "Товары не найдены.", Toast.LENGTH_LONG).show();
     }
 

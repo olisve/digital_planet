@@ -104,6 +104,7 @@ public class FilterFragment extends BaseFragment {
                 FragmentTransaction fragmentTransaction = FilterFragment.this.getFragmentManager().beginTransaction();
                 Bundle bundle = new Bundle();
                 bundle.putString("Category_Name", categoryName); // Name
+                bundle.putString("Category_Long_Name", categoryLongName); // Name
                 bundle.putString("Category_ID", categoryId); // ID
                 ArrayList<String> all_items = new ArrayList<>(selectedItems);
                 bundle.putString("Brands", all_items.size() > 0 ? all_items.get(0) : null);
