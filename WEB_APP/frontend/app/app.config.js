@@ -19,6 +19,9 @@ config(['$locationProvider', '$routeProvider',
         when('/info/:infoCategory', {
             template: '<company-info></company-info>'
         }).
+        when('/search/:searchParam', {
+            template: '<product-search></product-search>'
+        }).
         otherwise('/products');
     }
 ]);

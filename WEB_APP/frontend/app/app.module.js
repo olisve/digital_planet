@@ -5,5 +5,6 @@ angular.module('digitalPlanet', [
     'productDetail',
     'productList',
     'productFilter',
-    'companyInfo'
+    'companyInfo',
+    'productSearch'
 ]);

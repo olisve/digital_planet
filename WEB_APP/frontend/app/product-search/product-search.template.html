@@ -1,0 +1,23 @@
+<br><h3 class="text-center">Результат поиска по запросу {{$ctrl.reqst}}</h3><br>
+<div class="container">
+     <div class="row text-center">
+        <div class="col-sm-3" ng-repeat="product in $ctrl.searchproduct">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <a href="#!/products/{{product._id}}">
+                        {{product.name}}
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <a href="#!/products/{{product._id}}">
+                        <img ng-src="https://digital-app.herokuapp.com/image?url={{product.imagePath}}" class="img-responsive" style="height:200px" alt="{{product.name}}" />
+                    </a>
+                    <p class="mainpageprice">{{product.price}} руб.</p>
+                </div>
+                <div class="panel-footer text-center">
+                    <button type="button" class="btn btn-info">В корзину!</button>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>

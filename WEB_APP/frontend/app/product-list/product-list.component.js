@@ -10,5 +10,13 @@ component('productList', {
         $http.get('https://digital-app.herokuapp.com/products').then(function(response) {
             self.products = response.data;
         });
+
+        self.searchData = function(formSearch) {
+            self.hellot = formSearch.textSearch;
+            $http.get('filters/mobile.json').then(function(response) {
+                self.products = response.data;
+            });
+        };
+
     }]
 });
