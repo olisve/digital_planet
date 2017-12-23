@@ -14,8 +14,8 @@
                     </a>
                     <p class="mainpageprice">{{product.price}} руб.</p>
                 </div>
-                <div class="panel-footer text-center">
-                    <button type="button" class="btn btn-info">В корзину!</button>
+                <div class="panel-footer text-center" ng-controller="addBasketController">
+                    <button type="button" ng-click="addToBasket(product._id)"  class="btn btn-info">В корзину!</button>
                 </div>
             </div>
         </div>

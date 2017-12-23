@@ -29,7 +29,9 @@
                     <p class="itemprice"> Цена: {{$ctrl.product.price}} руб.</p>
                     <br>
                     <br>
-                    <button type="button" class="btn btn-info">В корзину!</button>
+                    <div ng-controller="addBasketController">
+                        <button type="button" ng-click="addToBasket(filter._id)"  class="btn btn-info">В корзину!</button>
+                    </div>
                     <br><br><br>
                     <p><b>Краткое описание: </b></p>
                     <p>{{$ctrl.product.description}}</p>
@@ -39,4 +41,6 @@
         </div>
     </div>
 </div>
+
+
 

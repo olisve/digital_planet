@@ -23,7 +23,7 @@
                     <div>
                         <p><b>Производитель</b></p>
                         <div class="radio">
-                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Lg">LG</label>
+                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Apple">Apple</label>
                         </div>
                         <div class="radio">
                             <label><input type="radio" ng-model="formInfo.manufacturer" value="Samsung">Samsung</label>
@@ -32,7 +32,7 @@
                             <label><input type="radio" ng-model="formInfo.manufacturer" value="Xiaomi">Xiaomi</label>
                         </div>
                         <div class="radio">
-                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Huawei">Huawei</label>
+                            <label><input type="radio" ng-model="formInfo.manufacturer" value="Lenovo">Lenovo</label>
                         </div>
                     </div>
                 </div>
@@ -56,8 +56,8 @@
                     </a>
                     <p class="mainpageprice">{{filter.price}} руб.</p>
                 </div>
-                <div class="panel-footer text-center">
-                    <button type="button" class="btn btn-info">В корзину!</button>
+                <div class="panel-footer text-center" ng-controller="addBasketController">
+                    <button type="button" ng-click="addToBasket(filter._id)"  class="btn btn-info">В корзину!</button>
                 </div>
             </div>
         </div>

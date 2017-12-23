@@ -1,0 +1,79 @@
+
+<div class="text-center" style="padding-left: 30%; padding-bottom: 25%" ng-show="!$ctrl.userInSystem && !$ctrl.userRegister">
+    <div class="col-sm-6">
+        <br><h3 class="text-center">Вход и регистрация</h3><br>
+        <div class="panel panel-info login-panel">
+            <div class="panel-body text-center">
+                <div class="col-xs-8">
+                    <label for="emailid">E-mail:</label>
+                    <input type="text" class="form-control" id="emailid" placeholder="email" ng-model="loginInfo.email">
+                </div>
+                <div class="col-xs-8">
+                    <label for="passwordid">Пароль:</label>
+                    <input type="password" class="form-control" id="passwordid" placeholder="password" ng-model="loginInfo.password">
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <button type="button" ng-click="$ctrl.logIn(loginInfo)"  class="btn btn-info">Войти</button>
+                <button type="button" ng-click="$ctrl.registIn()"  class="btn btn-info">Регистрация</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center" style="padding-left: 30%; padding-bottom: 45%" ng-show="$ctrl.userRegister">
+    <div class="col-sm-6">
+        <br><h3 class="text-center">Регистрация</h3><br>
+
+        <div class="panel panel-info login-panel">
+            <div class="panel-body text-center">
+                <div class="col-xs-8">
+                    <label for="emailR">E-mail:</label>
+                    <input type="text" class="form-control" id="emailR" placeholder="email" ng-model="registrInfo.email">
+                </div>
+                <div class="col-xs-8">
+                    <label for="passwordR">Пароль:</label>
+                    <input type="password" class="form-control" id="passwordR" placeholder="password" ng-model="registrInfo.password">
+                </div>
+                <div class="col-xs-8">
+                    <label for="nameR">Имя:</label>
+                    <input type="text" class="form-control" id="nameR" placeholder="firstname" ng-model="registrInfo.firstName">
+                </div>
+                <div class="col-xs-8">
+                    <label for="lastnameR">Фамилия:</label>
+                    <input type="text" class="form-control" id="lastnameR" placeholder="lastname" ng-model="registrInfo.lastName">
+                </div>
+                <div class="col-xs-8">
+                    <label for="addressR">Адрес:</label>
+                    <input type="text" class="form-control" id="addressR" placeholder="address" ng-model="registrInfo.address">
+                </div>
+                <div class="col-xs-8">
+                    <label for="phoneR">Телефон:</label>
+                    <input type="text" class="form-control" id="phoneR" placeholder="phone" ng-model="registrInfo.phone">
+                </div>
+            </div>
+            <div class="panel-footer text-center">
+                <button type="button" ng-click="$ctrl.registR(registrInfo)"  class="btn btn-info">Зарегистрироваться</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="text-center" style="padding-left: 30%; padding-bottom: 25%" ng-show="$ctrl.userPageIs">
+    <div class="col-sm-6">
+        <br><h3 class="text-center">Ваша страница</h3><br><br>
+        <p><b>Имя:</b>{{$ctrl.user.firstName}}</p>
+        <p><b>Фамилия:</b>{{$ctrl.user.lastName}}</p>
+        <p><b>Адрес:</b>{{$ctrl.user.address}}</p>
+        <p><b>Телефон:</b>{{$ctrl.user.phone}}</p>
+        <p><b>E-mail:</b>{{$ctrl.user.email}}</p>
+        <br>
+        <button type="button" ng-click="$ctrl.logOut()"  class="btn btn-info">Выйти</button>
+    </div>
+</div>
+
+
+

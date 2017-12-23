@@ -1,0 +1,43 @@
+<br><h3 class="text-center">Корзина</h3><br>
+<div class="container">
+     <div class="row text-center">
+
+
+        <div class="col-sm-7" ng-repeat="product in $ctrl.pfb">
+            <div class="panel panel-info panel-basket">
+                <div class="panel-heading">
+                    <a href="#!/products/{{product._id}}">
+                        {{product.name}}
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <div class="blok1">
+                        <a href="#!/products/{{product._id}}">
+                            <img ng-src="https://digital-app.herokuapp.com/image?url={{product.imagePath}}" class="img-responsive" alt="{{product.name}}" />
+                        </a>
+                    </div>
+                    <div class="blok2 mainpageprice">
+                        <div ng-controller="addBasketController">
+                        <button ng-click="deleteFromBasket(product._id)" type="submit" class="btn btn-info">X</button>
+                        </div>
+                        {{product.price}} руб.
+                    </div>
+                    <div class="blok3 inner">
+                        {{product.description}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div>
+             <h2><b>Итого:</b> {{$ctrl.totalSum}} руб.</h2>
+             <br>
+             <br>
+             <button type="button" ng-click="$ctrl.placeAnOrder()" class="btn btn-info orderbutton">Оформить заказ</button>
+
+         </div>
+
+
+
+     </div>
+</div>

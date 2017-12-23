@@ -22,6 +22,12 @@ config(['$locationProvider', '$routeProvider',
         when('/search/:searchParam', {
             template: '<product-search></product-search>'
         }).
+        when('/basket', {
+            template: '<product-basket></product-basket>'
+        }).
+        when('/user-page', {
+            template: '<user-page></user-page>'
+        }).
         otherwise('/products');
     }
 ]);
