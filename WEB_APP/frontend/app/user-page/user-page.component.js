@@ -39,9 +39,9 @@ component('userPage', {
             }
 
             self.registR = function(registerInfo){
-                var postStr = 'email='+registerInfo.email+'&password='+registerInfo.password+'&firstname='+registerInfo.firstName+'&lastname='+registerInfo.lastName+'+&address='+registerInfo.address+'&phone='+registerInfo.phone;
+                var postStr = 'email='+registerInfo.email+'&password='+registerInfo.password+'&firstname='+registerInfo.firstName+'&lastname='+registerInfo.lastName+'&address='+registerInfo.address+'&phone='+registerInfo.phone;
                 $http.post('https://digital-app.herokuapp.com/signup', postStr).then(function(response) {
-
+                    var k = response.data;
                 });
                 self.userRegister=false;
                 self.userInSystem=false;

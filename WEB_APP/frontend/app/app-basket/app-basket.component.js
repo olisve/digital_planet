@@ -2,8 +2,8 @@
 
 angular.
 module('appBasket', []).
-controller('addBasketController',
-    function ($scope) {
+controller('addBasketController',["$scope", "$route",
+    function ($scope, $route) {
         $scope.addToBasket = function(productId) {
             localStorage.setItem(productId, productId);
             var pr =  localStorage.getItem(productId);
@@ -13,6 +13,7 @@ controller('addBasketController',
         $scope.deleteFromBasket = function(productId) {
             localStorage.removeItem(productId);
             alert('Товар удален из корзины!');
+            $route.reload();
         };
-});
+}]);
 
